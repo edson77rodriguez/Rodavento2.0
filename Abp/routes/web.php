@@ -6,6 +6,7 @@ use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Tipo_RecursoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\RoleMiddleware;
 
 
 Route::get('/', function () {
@@ -41,3 +42,13 @@ Route::get('/GDS', [DashboardController::class, 'showCrudMenu'])->name('crud.men
 
 
 });
+
+// Ruta protegida solo para Administrador
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+})->middleware('auth', RoleMiddleware::class . ':Administrador');
+
+// Ruta protegida solo para Supervisor
+Route::get('/supervisor', function () {
+    return view('supervisor.dashboard');
+})->middleware('auth', RoleMiddleware::class . ':Supervisor');

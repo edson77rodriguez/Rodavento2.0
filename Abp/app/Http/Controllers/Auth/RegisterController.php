@@ -33,7 +33,7 @@ class RegisterController extends Controller
             'telefono' => ['required', 'string', 'max:20'],
             'direccion_id' => ['required', 'integer', 'exists:direccions,id'], // Validación para la dirección
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'rol_id' => ['required', 'integer', 'exists:rols,id'], // Validación para el rol
+            'role_id' => $data['role_id'], // Asegúrate de que estás recibiendo correctamente el ID del rol
         ]);
     }
 

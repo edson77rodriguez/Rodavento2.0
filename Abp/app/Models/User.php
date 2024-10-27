@@ -29,11 +29,17 @@ class User extends Authenticatable
 
     public function rol()
     {
-        return $this->belongsTo(Rol::class);
+        return $this->belongsTo(Rol::class, 'role_id');
     }
 
     public function direccion()
     {
         return $this->belongsTo(Direccion::class);
     }
+
+   // Método para verificar roles usando 'nom_rol'
+   public function hasRole($role)
+   {
+       return $this->rol->nom_rol === $role;
+   }
 }
