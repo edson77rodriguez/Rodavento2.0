@@ -19,8 +19,8 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     // Ruta del dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-
+// Ruta para el menú de CRUDs
+Route::get('/GDS', [DashboardController::class, 'showCrudMenu'])->name('crud.menu');
     // Rutas de recursos
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::resource('cargos', CargoController::class);
@@ -30,6 +30,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tipos', Tipo_RecursoController::class);
 
     Route::resource('roles', RolController::class);
+    Route::get('/usuarios', [UserController::class, 'index'])->name('users.index');
+    Route::get('/productos', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/ventas', [SaleController::class, 'index'])->name('sales.index');
+    Route::get('/clientes', [ClientController::class, 'index'])->name('clients.index');
 
 
 
