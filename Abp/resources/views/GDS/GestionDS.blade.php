@@ -37,7 +37,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <h2 class="text-center mb-4">Menú de Gestión</h2>
+            <h2 class="text-center mb-4">Menú de CRUD´S del Sistema</h2>
             <div class="row">
                 <!-- Iteración sobre los CRUDs -->
                 @foreach ($cruds as $crud)
