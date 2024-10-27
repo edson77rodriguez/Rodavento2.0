@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Rol; // Importa el modelo Rol
+use App\Models\Direccion; // Importa el modelo Direccion
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth; // Importar Auth para obtener al usuario autenticado
-use Illuminate\Support\Str; // Importar Str para generar códigos únicos
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -29,27 +31,10 @@ class RegisterController extends Controller
             'am' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'telefono' => ['required', 'string', 'max:20'],
-            'fecha_nac' => ['required', 'date'],
+            'direccion_id' => ['required', 'integer', 'exists:direccions,id'], // Validación para la dirección
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'rol_id' => ['required', 'integer', 'exists:roles,id'],
+            'rol_id' => ['required', 'integer', 'exists:rols,id'], // Validación para el rol
         ]);
-    }
-
-    /**
-     * Genera un código de usuario único.
-     *
-     * @return string
-     */
-    protected function generateCodigoUsuario()
-    {
-        $codigo = 'USER-' . Str::random(8); 
-
-        
-        while (User::where('codigo_usuario', $codigo)->exists()) {
-            $codigo = 'USER-' . Str::random(8); // Regenerar si ya existe
-        }
-
-        return $codigo;
     }
 
     protected function create(array $data)
@@ -60,10 +45,9 @@ class RegisterController extends Controller
             'am' => $data['am'],
             'email' => $data['email'],
             'telefono' => $data['telefono'],
-            'fecha_nac' => $data['fecha_nac'],
-            'codigo_usuario' => $this->generateCodigoUsuario(), // Código único generado automáticamente
+            'direccion_id' => $data['direccion_id'], // Guarda la dirección
             'password' => Hash::make($data['password']),
-            'rol_id' => $data['rol_id'],
+            'rol_id' => $data['rol_id'], // Guarda el rol
         ]);
     }
 
@@ -76,5 +60,18 @@ class RegisterController extends Controller
         }
 
         return '/home';
+    }
+
+    /**
+     * Muestra el formulario de registro.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        $roles = Rol::all(); // Obtiene todos los roles disponibles
+        $direcciones = Direccion::all(); // Obtiene todas las direcciones disponibles
+
+        return view('auth.register', compact('roles', 'direcciones')); // Pasa los roles y direcciones a la vista
     }
 }

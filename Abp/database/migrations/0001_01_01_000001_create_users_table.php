@@ -18,11 +18,10 @@ return new class extends Migration
             $table->string('am');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->foreignId('direccion_id')->constrained('direccions')->onDelete('cascade'); // Relación con tabla 'roles'
             $table->string('telefono');
-            $table->date('fecha_nac'); // Cambiado a 'date'
-            $table->string('codigo_usuario')->unique();
             $table->string('password');
-            $table->foreignId('rol_id')->constrained('roles')->onDelete('cascade'); // Relación con tabla 'roles'
+            $table->foreignId('rol_id')->constrained('rols')->onDelete('cascade'); // Relación con tabla 'roles'
             $table->rememberToken();
             $table->timestamps();
         });
