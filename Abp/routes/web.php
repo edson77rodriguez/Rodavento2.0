@@ -1,14 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\RolController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RolController;
 use App\Http\Controllers\EstadoController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Tipo_RecursoController;
-
-
+use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
@@ -31,6 +28,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('roles', RolController::class);
     Route::resource('estados', EstadoController::class);
     Route::resource('tipos', Tipo_RecursoController::class);
+
+    Route::resource('roles', RolController::class);
+
 
 
 

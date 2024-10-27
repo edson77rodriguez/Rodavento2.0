@@ -70,8 +70,8 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $roles = Rol::all(); // Obtiene todos los roles disponibles
-        $direcciones = Direccion::all(); // Obtiene todas las direcciones disponibles
+        $direccions = Direccion::all(); // Obtiene todas las direcciones disponibles
 
-        return view('auth.register', compact('roles', 'direcciones')); // Pasa los roles y direcciones a la vista
+        return view('auth.register', compact('roles', 'direccions')); // Pasa los roles y direcciones a la vista
     }
 }

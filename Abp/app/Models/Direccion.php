@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Direccion extends Model
 {
     use HasFactory;
+
+    protected $table = 'direccions';
+
     protected $fillable = ['desc_direccion'];
 }
