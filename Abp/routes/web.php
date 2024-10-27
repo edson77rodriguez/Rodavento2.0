@@ -14,7 +14,7 @@ use App\Http\Controllers\Estado_equipoController;
 use App\Http\Controllers\AreaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckRole;
-
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,7 +32,11 @@ Route::get('/GDS', [DashboardController::class, 'showCrudMenu'])->name('crud.men
     // Rutas de recursos
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::resource('homes', HomeController::class);
-    Route::resource('roles', RolController::class);
+     // Gestión de Roles
+     Route::resource('roles', RolController::class);
+
+     // Gestión de Usuarios
+     Route::resource('users', UserController::class);
 
     Route::resource('roles', RolController::class);
     Route::resource('direcciones', DireccionController::class);
@@ -59,6 +63,8 @@ Route::get('/admin', function () {
 Route::get('/supervisor', function () {
     return view('supervisor.dashboard');
 })->name('supervisor.dashboard')->middleware(CheckRole::class . ':Supervisor');
+
+
 
 });
 

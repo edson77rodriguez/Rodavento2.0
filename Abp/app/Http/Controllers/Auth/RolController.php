@@ -1,96 +1,60 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use App\Models\Rol;
 use Illuminate\Http\Request;
 
-// Asegúrate de importar el modelo Rol
-
 class RolController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Listar todos los roles
     public function index()
     {
-        // Obtener todos los roles
         $roles = Rol::all();
-
+        return view('admin.roles.index', compact('roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Crear un nuevo rol
     public function create()
     {
-        return view('roles.create'); // Retornar la vista del formulario para crear un nuevo rol
+        return view('admin.roles.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Guardar un nuevo rol
     public function store(Request $request)
     {
-        // Validar la solicitud
         $request->validate([
-            'nom_rol' => 'required|string|max:255', // Asegúrate de ajustar las reglas de validación según tus necesidades
+            'nom_rol' => 'required|unique:rols|max:255',
         ]);
 
-        // Crear un nuevo rol
-        Rol::create([
-            'nom_rol' => $request->nom_rol,
-        ]);
-
-        return redirect()->route('roles.index')->with('success', 'Rol creado correctamente.'); // Redirigir con un mensaje de éxito
+        Rol::create($request->all());
+        return redirect()->route('roles.index')->with('success', 'Rol creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Editar un rol existente
+    public function edit($id)
     {
-        $rol = Rol::findOrFail($id); // Obtener el rol por ID
-        return view('roles.show', compact('rol')); // Retornar la vista del rol
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $rol = Rol::findOrFail($id); // Obtener el rol por ID
-        return view('roles.edit', compact('rol')); // Retornar la vista del formulario para editar el rol
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        // Validar la solicitud
-        $request->validate([
-            'nom_rol' => 'required|string|max:255',
-        ]);
-
-        // Encontrar y actualizar el rol
         $rol = Rol::findOrFail($id);
-        $rol->update([
-            'nom_rol' => $request->nom_rol,
-        ]);
-
-        return redirect()->route('roles.index')->with('success', 'Rol actualizado correctamente.'); // Redirigir con un mensaje de éxito
+        return view('admin.roles.edit', compact('rol'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Actualizar un rol existente
+    public function update(Request $request, $id)
     {
-        $rol = Rol::findOrFail($id); // Obtener el rol por ID
-        $rol->delete(); // Eliminar el rol
+        $request->validate([
+            'nom_rol' => 'required|unique:rols,nom_rol,' . $id . '|max:255',
+        ]);
 
-        return redirect()->route('roles.index')->with('success', 'Rol eliminado correctamente.'); // Redirigir con un mensaje de éxito
+        $rol = Rol::findOrFail($id);
+        $rol->update($request->all());
+        return redirect()->route('roles.index')->with('success', 'Rol actualizado correctamente.');
+    }
+
+    // Eliminar un rol
+    public function destroy($id)
+    {
+        $rol = Rol::findOrFail($id);
+        $rol->delete();
+        return redirect()->route('roles.index')->with('success', 'Rol eliminado correctamente.');
     }
 }
