@@ -7,7 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DireccionController;
 use App\Http\Controllers\T_habilidadController;
 use App\Http\Controllers\DuracionController;
-
+use App\Http\Controllers\Estado_actividadController;
+use App\Http\Controllers\CategoriaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckRole;
 
@@ -31,16 +32,17 @@ Route::get('/GDS', [DashboardController::class, 'showCrudMenu'])->name('crud.men
     Route::resource('roles', RolController::class);
 
     Route::resource('roles', RolController::class);
-   
-
+    Route::resource('direcciones', DireccionController::class);
+    Route::resource('t_habilidades', T_habilidadController::class);
+    Route::resource('duraciones', DuracionController::class);
+    Route::resource('e_actividades', Estado_actividadController::class);
+    Route::resource('categorias', CategoriaController::class);
 
 
    // Ruta protegida solo para Administrador
 Route::get('/admin', function () {
     return view('admin.dashboard');
-    Route::resource('direcciones', DireccionController::class);
-    Route::resource('t_habilidades', T_habilidadController::class);
-    Route::resource('duraciones', DuracionController::class);
+   
 
 })->name('admin.dashboard')->middleware(CheckRole::class . ':Administrador');
 

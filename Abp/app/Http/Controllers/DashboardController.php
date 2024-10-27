@@ -34,6 +34,8 @@ class DashboardController extends Controller
     $cruds = [
         ['name' => 'Direcciones', 'description' => 'Gestión de direcciones.', 'route' => 'direcciones.index'],
         ['name' => 'Tipo habilidades', 'description' => 'Gestión de Tipo de habilidades.', 'route' => 't_habilidades.index'],
+        ['name' => 'Duraciones', 'description' => 'Gestión de Duraciones de actividades.', 'route' => 'duraciones.index'],
+        ['name' => 'Estado de Actividades', 'description' => 'Gestión de estado de actividades.', 'route' => 'e_actividades.index'],
         // Otros CRUDs
     ];
     

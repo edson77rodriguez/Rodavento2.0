@@ -1,16 +1,16 @@
 @extends('admin.dashboard')
 
 @section('template_title')
-    Tipo habilidades
+    Categorias
 @endsection
 
 @section('crud_content')
 <div class="container py-5">
     <div class="card-header">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span id="card_title">{{ __('Tipo Habilidades') }}</span>
+            <span id="card_title">{{ __('Categorias') }}</span>
             <div class="float-right">
-                <button class="btn btn-dark me-3" data-bs-toggle="modal" data-bs-target="#createT_habilidadModal">
+                <button class="btn btn-dark me-3" data-bs-toggle="modal" data-bs-target="#createCategoriasModal">
                     {{ __('Create New') }}
                 </button>
             </div>
@@ -19,20 +19,20 @@
 
     <div class="container mt-4">
     <div class="row">
-        @foreach ($t_habilidades as $t_habilidad)
+        @foreach ($categorias as $categoria)
             <div class="col-lg-4 col-md-4 col-sm-6 mb-6">
                 <div class="card h-100"> <!-- Añadido h-100 para que la tarjeta ocupe todo el espacio disponible -->
                     <div class="card-body">
-                        <h5 class="card-title text-center">{{ $t_habilidad->desc_t }}</h5>
-                        <p class="card-text"><strong>Id:</strong> {{ $t_habilidad->id }}</p>
+                        <h5 class="card-title text-center">{{ $categoria->desc_cat }}</h5>
+                        <p class="card-text"><strong>Id:</strong> {{ $categoria->id }}</p>
 
                         <div class="d-flex justify-content-between">
-                            <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewT_habilidadModal{{ $t_habilidad->id }}">Ver</button>
-                            <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editT_habilidadModal{{ $t_habilidad->id }}">Editar</button>
-                            <form action="{{ route('t_habilidades.destroy', $t_habilidad->id) }}" method="POST" style="display: inline;">
+                            <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewCategoriasModal{{ $categoria->id }}">Ver</button>
+                            <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editCategoriasModal{{ $categoria->id }}">Editar</button>
+                            <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $t_habilidad->id }}')">Eliminar</button>
+                                <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $categoria->id }}')">Eliminar</button>
                             </form>
                         </div>
                     </div>
@@ -40,16 +40,16 @@
             </div>
 
                 <!-- Modal Ver Direccion -->
-                <div class="modal fade" id="viewT_habilidadModal{{ $t_habilidad->id }}" tabindex="-1" aria-labelledby="viewT_habilidadModalLabel{{ $t_habilidad->id }}" aria-hidden="true">
+                <div class="modal fade" id="viewCategoriasModal{{ $categoria->id }}" tabindex="-1" aria-labelledby="viewDuracionModalLabel{{ $categoria->id }}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="viewT_habilidadModalLabel{{ $t_habilidad->id }}">Detalles de la Tipo habilidad</h5>
+                                <h5 class="modal-title" id="viewCategoriasModalLabel{{ $categoria->id }}">Detalles de la Categoria</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p><strong>ID:</strong> {{ $t_habilidad->id }}</p>
-                                <p><strong>Descripción:</strong> {{ $t_habilidad->desc_t }}</p>
+                                <p><strong>ID:</strong> {{ $categoria->id }}</p>
+                                <p><strong>Descripción:</strong> {{ $categoria->desc_cat }}</p>
                                 <!-- Agrega más detalles si es necesario -->
                             </div>
                         </div>
@@ -57,20 +57,20 @@
                 </div>
 
                 <!-- Modal Editar Direccion -->
-                <div class="modal fade" id="editT_habilidadModal{{ $t_habilidad->id }}" tabindex="-1" aria-labelledby="editT_habilidadModalLabel{{ $t_habilidad->id }}" aria-hidden="true">
+                <div class="modal fade" id="editCategoriasModal{{ $categoria->id }}" tabindex="-1" aria-labelledby="editCategoriasModalLabel{{ $categoria->id }}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="editT_habilidadModalLabel{{ $t_habilidad->id }}">Editar Dirección</h5>
+                                <h5 class="modal-title" id="editCategoriasModalLabel{{ $categoria->id }}">Editar Duracion</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" action="{{ route('t_habilidades.update', $t_habilidad->id) }}">
+                                <form method="POST" action="{{ route('categorias.update', $categoria->id) }}">
                                     @csrf
                                     @method('PUT')
                                     <div class="mb-3">
-                                        <label for="desc_t{{ $t_habilidad->id }}" class="form-label">Dirección</label>
-                                        <input type="text" name="desc_t" id="desc_t{{ $t_habilidad->id }}" value="{{ old('t_habilidad', $t_habilidad->desc_t) }}" class="form-control" required>
+                                        <label for="desc_cat{{ $categoria->id }}" class="form-label">Duración</label>
+                                        <input type="text" name="desc_cat" id="desc_cat{{ $categoria->id }}" value="{{ old('categoria', $categoria->desc_cat) }}" class="form-control" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Actualizar</button>
                                 </form>
@@ -83,19 +83,19 @@
     </div>
 
     <!-- Modal Crear Direccion -->
-    <div class="modal fade" id="createT_habilidadModal" tabindex="-1" aria-labelledby="createT_habilidadModalLabel" aria-hidden="true">
+    <div class="modal fade" id="createCategoriasModal" tabindex="-1" aria-labelledby="createCategoriasModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createT_habilidadModalLabel">Crear Nueva Tipo habilidad</h5>
+                    <h5 class="modal-title" id="createCategoriasModalLabel">Crear Nueva Categoria</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{ route('t_habilidades.store') }}">
+                    <form method="POST" action="{{ route('categorias.store') }}">
                         @csrf
                         <div class="mb-3">
-                            <label for="desc_t" class="form-label">Descripción</label>
-                            <input type="text" name="desc_t" id="desc_t" class="form-control" required>
+                            <label for="desc_cat" class="form-label">Descripción</label>
+                            <input type="text" name="desc_cat" id="desc_cat" class="form-control" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Crear</button>
                     </form>
@@ -116,7 +116,7 @@
     function confirmDelete(id) {
         Swal.fire({
             title: 'Eliminar',
-            text: '¿Estás seguro de que deseas eliminar esta tipo habilidad?',
+            text: '¿Estás seguro de que deseas eliminar esta categoria?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -127,7 +127,7 @@
             if (result.isConfirmed) {
                 let form = document.createElement('form');
                 form.method = 'POST'; 
-                form.action = '/t_habilidades/' + id;
+                form.action = '/categorias/' + id;
                 form.innerHTML = '@csrf @method("DELETE")';
                 document.body.appendChild(form);
                 form.submit();

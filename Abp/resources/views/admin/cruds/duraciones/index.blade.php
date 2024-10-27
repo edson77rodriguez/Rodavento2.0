@@ -57,7 +57,7 @@
                 </div>
 
                 <!-- Modal Editar Direccion -->
-                <div class="modal fade" id="editDuracionModal{{ $duracion->id }}" tabindex="-1" aria-labelledby="editDuracionModalLabel{{ $direccion->id }}" aria-hidden="true">
+                <div class="modal fade" id="editDuracionModal{{ $duracion->id }}" tabindex="-1" aria-labelledby="editDuracionModalLabel{{ $duracion->id }}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
