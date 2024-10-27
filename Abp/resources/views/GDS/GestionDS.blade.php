@@ -1,4 +1,4 @@
-@extends('dashboard') <!-- Asegúrate de usar la plantilla del dashboard -->
+@extends('admin.dashboard') <!-- Asegúrate de usar la plantilla del dashboard -->
 
 @section('crud_content')
 <style>
@@ -41,16 +41,17 @@
             <div class="row">
                 <!-- Iteración sobre los CRUDs -->
                 @foreach ($cruds as $crud)
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm border-0 h-100">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title text-primary">{{ $crud['name'] }}</h5>
-                                <p class="card-text text-muted flex-grow-1">{{ $crud['description'] }}</p>
-                                <a href="{{ route($crud['route']) }}" class="btn btn-primary mt-auto">Gestionar {{ $crud['name'] }}</a>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-primary">{{ $crud['name'] }}</h5>
+                <p class="card-text text-muted flex-grow-1">{{ $crud['description'] }}</p>
+                <a href="{{ route($crud['route']) }}" class="btn btn-primary mt-auto">Gestionar {{ $crud['name'] }}</a>
+            </div>
+        </div>
+    </div>
+@endforeach
+
             </div>
         </div>
     </div>

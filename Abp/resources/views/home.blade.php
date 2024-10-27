@@ -61,6 +61,12 @@
             font-size: 1rem;
         }
     </style>
+    <li class="nav-item d-flex align-items-center">
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-outline-danger btn-sm mb-0 me-3">Cerrar sesión</button>
+        </form>
+    </li>
 </head>
 <body>
     <div class="container">

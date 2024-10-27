@@ -27,19 +27,16 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function rol()
-    {
-        return $this->belongsTo(Rol::class, 'role_id');
-    }
+    
 
     public function direccion()
     {
         return $this->belongsTo(Direccion::class);
     }
 
-   // Método para verificar roles usando 'nom_rol'
-   public function hasRole($role)
-   {
-       return $this->rol->nom_rol === $role;
-   }
+   // En el modelo User
+public function rol()
+{
+    return $this->belongsTo(Rol::class);
+}
 }

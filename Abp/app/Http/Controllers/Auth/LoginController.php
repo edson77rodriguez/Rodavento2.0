@@ -41,6 +41,24 @@ class LoginController extends Controller
 
         return view('auth.login', compact('direccions', 'roles')); // Pasar ambas variables a la vista
     }
+
+    protected function authenticated(Request $request, $user)
+    {
+        // Redirigir según el rol del usuario
+        if ($user->rol) {
+            switch ($user->rol->nom_rol) {
+                case 'Administrador':
+                    return redirect()->route('admin.dashboard'); // Cambia a tu ruta de administrador
+                case 'Supervisor':
+                    return redirect()->route('supervisor.dashboard'); // Cambia a tu ruta de supervisor
+                default:
+                    return redirect()->route('home'); // Ruta por defecto
+            }
+        }
+
+        // Si no tiene rol, redirige a la página de acceso no autorizado o a otra ruta
+        return redirect('/no-autorizado');
+    }
 }
 
 

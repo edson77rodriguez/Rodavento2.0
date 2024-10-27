@@ -209,50 +209,29 @@
     </button>
 
 
-          <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="{{ route('home') }}">Home</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Bienvenido, {{ $user->nom }} {{ $user->ap }} {{ $user->am }}</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h5 class="text-muted">¡Hola, {{ $user->nom }}!</h5>
-                            <p class="lead">
-                                Nos alegra verte nuevamente. Aquí puedes gestionar todas tus tareas y acceder a las funcionalidades del sistema. 
-                            </p>
-                            <hr>
-                            <p>
-                                Si tienes alguna duda, no dudes en contactarnos. Estamos aquí para ayudarte.
-                            </p>
-                            <a href="{{ route('home') }}" class="btn btn-outline-primary mt-3">Ir al Dashboard</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <ul class="navbar-nav justify-content-end">
+    <li class="nav-item d-flex align-items-center">
+        <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="{{ route('home') }}">Home</a>
+    </li>
+    <li class="nav-item d-flex align-items-center">
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-outline-danger btn-sm mb-0 me-3">Cerrar sesión</button>
+        </form>
+    </li>
+</ul>
 </div>
-    <div class="col-md-10 ">
-           
-            @yield('crud_content')
-            <div class="container mt-5">
-            
-        </div>
-        
-        
-     
-    </div>
+</div>
+</nav>
+
+
+
+<div class="col-md-10 ">
+
+        @yield('crud_content')
+    
+</div>
+
    
   </main>
   <!--   Core JS Files   -->

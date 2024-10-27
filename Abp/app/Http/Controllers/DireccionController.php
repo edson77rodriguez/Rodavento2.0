@@ -3,62 +3,50 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Direccion; 
 class DireccionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $direcciones =Direccion::all();
+        return view('admin.cruds.direcciones.index', compact('direcciones'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'desc_direccion' => 'required',
+        ]);
+    
+        Direccion::create($validatedData);
+    
+        return redirect()->route('direcciones.index')->with('register',' ');
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+       
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
-    }
+        $validatedData = $request->validate([
+            'desc_direccion' => 'required',
+        ]);
+        $direccion = Direccion::find($id);
+        $direccion->update($request->all());
 
-    /**
-     * Remove the specified resource from storage.
-     */
+        return redirect()->route('direcciones.index')->with('modify',' ');
+    }
     public function destroy(string $id)
     {
-        //
+        $direccion = Direccion::findOrFail($id);
+        $direccion->delete();
+
+        return redirect()->route('direcciones.index')->with('destroy',' ');
     }
 }
