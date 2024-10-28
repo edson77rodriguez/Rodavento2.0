@@ -29,12 +29,23 @@ Route::middleware(['auth'])->group(function () {
   
 // Ruta para el menú de CRUDs
 Route::get('/GDS', [DashboardController::class, 'showCrudMenu'])->name('crud.menu');
+// Rutas para la gestión de roles
+
+
+// Rutas para la gestión de permisos
+Route::resource('permissions', PermissionController::class);
     // Rutas de recursos
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::resource('homes', HomeController::class);
      // Gestión de Roles
-     Route::resource('roles', RolController::class);
-
+     Route::prefix('roles')->group(function () {
+        Route::get('/', [RolController::class, 'index'])->name('roles.index');
+        Route::get('/create', [RolController::class, 'create'])->name('roles.create');
+        Route::post('/', [RolController::class, 'store'])->name('roles.store');
+        Route::get('/{id}/edit', [RolController::class, 'edit'])->name('roles.edit');
+        Route::put('/{id}', [RolController::class, 'update'])->name('roles.update');
+        Route::delete('/{id}', [RolController::class, 'destroy'])->name('roles.destroy');
+    });
      // Gestión de Usuarios
      Route::resource('users', UserController::class);
 
