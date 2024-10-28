@@ -15,6 +15,18 @@ use App\Http\Controllers\AreaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RolePermissionController;
+
+
+Route::resource('roles', RolePermissionController::class);
+
+Route::get('/roles-permissions', [RolePermissionController::class, 'showAssignForm'])->name('assign.form');
+Route::post('/roles-permissions', [RolePermissionController::class, 'assignPermissions'])->name('assign.permissions');
+Route::middleware(['auth', 'role:admin'])->group(function() {
+    Route::get('/roles-permissions', [RolePermissionController::class, 'showAssignForm'])->name('assign.form');
+    Route::post('/roles-permissions', [RolePermissionController::class, 'assignPermissions'])->name('assign.permissions');
+});
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,7 +38,7 @@ Auth::routes();
 // Agrupar las rutas que requieren autenticación
 Route::middleware(['auth'])->group(function () {
     // Ruta del dashboard
-  
+
 // Ruta para el menú de CRUDs
 Route::get('/GDS', [DashboardController::class, 'showCrudMenu'])->name('crud.menu');
 // Rutas para la gestión de roles
@@ -61,7 +73,7 @@ Route::resource('permissions', PermissionController::class);
    // Ruta protegida solo para Administrador
 Route::get('/admin', function () {
     return view('admin.dashboard');
-   
+
 
 })->name('admin.dashboard')->middleware(CheckRole::class . ':Administrador');
 

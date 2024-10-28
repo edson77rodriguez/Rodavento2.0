@@ -31,7 +31,8 @@ class RolController extends Controller
             'permissions' => 'array'
         ]);
 
-        $rol = Rol::create(['nom_rol' => $request->nom_rol]);
+        // Crear el rol y asignar el guard
+        $rol = Rol::create(['nom_rol' => $request->nom_rol, 'guard_name' => 'web']);
 
         // Asignar permisos al rol
         if ($request->permissions) {
@@ -41,15 +42,7 @@ class RolController extends Controller
         return redirect()->route('roles.index')->with('success', 'Rol creado correctamente.');
     }
 
-    // Editar rol existente
-    public function edit($id)
-    {
-        $rol = Rol::findOrFail($id);
-        $permissions = Permission::all();
-        return view('admin.roles.edit', compact('rol', 'permissions')); // Asegúrate de que la vista exista
-    }
-
-    // Actualizar rol existente
+// Actualizar rol existente
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -58,7 +51,7 @@ class RolController extends Controller
         ]);
 
         $rol = Rol::findOrFail($id);
-        $rol->update($request->all());
+        $rol->update(['nom_rol' => $request->nom_rol, 'guard_name' => 'web']); // Asegúrate de incluir el guard
 
         // Actualizar permisos del rol
         if ($request->permissions) {
@@ -78,4 +71,18 @@ class RolController extends Controller
 
         return redirect()->route('roles.index')->with('success', 'Rol eliminado correctamente.');
     }
+    // Mostrar un rol específico
+    public function show($id)
+    {
+        $rol = Rol::findOrFail($id);
+        return view('admin.roles.show', compact('rol')); // Asegúrate de que la vista exista
+    }
+// Editar rol existente
+    public function edit($id)
+    {
+        $rol = Rol::findOrFail($id); // Buscar el rol por ID, o lanzar un error 404 si no se encuentra
+        $permissions = Permission::all(); // Obtener todos los permisos disponibles
+        return view('admin.roles.edit', compact('rol', 'permissions')); // Devolver la vista de edición con los datos del rol y los permisos
+    }
+
 }

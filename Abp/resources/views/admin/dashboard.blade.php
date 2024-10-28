@@ -20,8 +20,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/assets/img/apple-icon.png') }}">
   <link rel="icon" type="image/png" href="{{ asset('/assets/img/favicon.png') }}">
-  
-  <title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <title>
     TeamLearn
   </title>
   <!--     Fonts and icons     -->
@@ -29,14 +33,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
   <link href="{{ asset('/assets/css/nucleo-icons.css') }}" rel="stylesheet" />
-  
+
   <link href="{{ asset('/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
-  
+
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="{{ asset('/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
   <link href="{{ asset('/css/alertify.min.css') }}" rel="stylesheet" />
-  
+
   <!-- CSS Files -->
   <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('/assets/css/soft-ui-dashboard.css?v=1.0.7') }}">
@@ -47,13 +51,13 @@
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
-  
+
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
-  
+
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">
-   
+
         <span class="ms-1 font-weight-bold">Rodavento </span>
         <br>
         <span class="ms-1 font-weight-bold"></span>
@@ -133,7 +137,7 @@
         @endunless
 </li>
 
-        
+
         <li class="nav-item">
         @unless(Auth::user()->hasRole('admin'))
           <a class="nav-link  active" href="{{ route('roles.index') }}">
@@ -214,7 +218,7 @@
           </ol>
           <h6 class="font-weight-bolder mb-0">Gestion del Sistema</h6>
         </nav>
-        
+
 <nav class="navbar navbar-expand-md navbar-light bg-light">
     <!-- Botón de hamburguesa para dispositivos pequeños -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -242,14 +246,14 @@
 <div class="col-md-10 ">
 
         @yield('crud_content')
-    
+
 </div>
 
-   
+
   </main>
   <!--   Core JS Files   -->
   <script src=" {{ asset('/assets/js/core/popper.min.js') }}">
-    
+
   </script>
   <script src=" {{ asset('/assets/js/core/bootstrap.min.js') }}"></script>
   <script src="{{ asset('/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
