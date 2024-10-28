@@ -52,4 +52,5 @@ class AsignarGuiaController extends Controller
          $asignarGuia->delete();
          return redirect()->route('asignar_guias.index')->with('success', 'Asignación eliminada con éxito.');
      }
+     
 }

@@ -23,9 +23,9 @@
                 <div class="col-lg-4 col-md-4 col-sm-6 mb-6">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title text-center">{{ $asignarGuia->user->name }}</h5>
+                            <h5 class="card-title text-center">{{ $asignarGuia->user->nom }} {{ $asignarGuia->user->ap }} {{ $asignarGuia->user->am }}</h5>
                             <p class="card-text"><strong>ID:</strong> {{ $asignarGuia->id }}</p>
-
+                            <p class="card-text"><strong>Habilidad:</strong> {{ $asignarGuia->habilidad->nom_hab }}</p>
                             <div class="d-flex justify-content-between">
                                 <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewAsignarGuiaModal{{ $asignarGuia->id }}">Ver</button>
                                 <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editAsignarGuiaModal{{ $asignarGuia->id }}">Editar</button>
@@ -49,8 +49,8 @@
                             </div>
                             <div class="modal-body">
                                 <p><strong>ID:</strong> {{ $asignarGuia->id }}</p>
-                                <p><strong>Usuario:</strong> {{ $asignarGuia->user->name }}</p>
-                                <p><strong>Habilidad:</strong> {{ $asignarGuia->habilidad->nombre }}</p>
+                                <p><strong>Usuario:</strong> {{ $asignarGuia->user->nom }}</p>
+                                <p><strong>Habilidad:</strong> {{ $asignarGuia->habilidad->nom_hab }}</p>
                                 <p><strong>Fecha Emisión:</strong> {{ $asignarGuia->fecha_emsion }}</p>
                                 <p><strong>Fecha Vencimiento:</strong> {{ $asignarGuia->fecha_vencimiento }}</p>
                             </div>
@@ -74,7 +74,7 @@
                                         <label for="user_id{{ $asignarGuia->id }}" class="form-label">Usuario</label>
                                         <select name="user_id" id="user_id{{ $asignarGuia->id }}" class="form-control" required>
                                             @foreach($usuarios as $usuario)
-                                                <option value="{{ $usuario->id }}" {{ $usuario->id == $asignarGuia->user_id ? 'selected' : '' }}>{{ $usuario->name }}</option>
+                                                <option value="{{ $usuario->id }}" {{ $usuario->id == $asignarGuia->user_id ? 'selected' : '' }}>{{ $usuario->nom }} {{ $usuario->ap }} {{ $usuario->am }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -82,7 +82,7 @@
                                         <label for="habilidad_id{{ $asignarGuia->id }}" class="form-label">Habilidad</label>
                                         <select name="habilidad_id" id="habilidad_id{{ $asignarGuia->id }}" class="form-control" required>
                                             @foreach($habilidades as $habilidad)
-                                                <option value="{{ $habilidad->id }}" {{ $habilidad->id == $asignarGuia->habilidad_id ? 'selected' : '' }}>{{ $habilidad->nombre }}</option>
+                                                <option value="{{ $habilidad->id }}" {{ $habilidad->id == $asignarGuia->habilidad_id ? 'selected' : '' }}>{{ $habilidad->nom_hab }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -120,7 +120,7 @@
                         <label for="user_id" class="form-label">Usuario</label>
                         <select name="user_id" id="user_id" class="form-control" required>
                             @foreach($usuarios as $usuario)
-                                <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                                <option value="{{ $usuario->id }}">{{ $usuario->nom }} {{ $usuario->ap }} {{ $usuario->am }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -128,7 +128,7 @@
                         <label for="habilidad_id" class="form-label">Habilidad</label>
                         <select name="habilidad_id" id="habilidad_id" class="form-control" required>
                             @foreach($habilidades as $habilidad)
-                                <option value="{{ $habilidad->id }}">{{ $habilidad->nombre }}</option>
+                                <option value="{{ $habilidad->id }}">{{ $habilidad->nom_hab }}</option>
                             @endforeach
                         </select>
                     </div>

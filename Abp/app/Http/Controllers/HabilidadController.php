@@ -21,7 +21,7 @@ class HabilidadController extends Controller
         $request->validate([
             'nom_hab' => 'required',
             'desc_habilidad' => 'required',
-            't_habilidad_id' => 'required|exists:t_habilidades,id',
+            't_habilidad_id' => 'required',
         ]);
 
         Habilidad::create($request->all());
