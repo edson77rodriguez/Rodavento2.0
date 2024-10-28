@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/GDS', [DashboardController::class, 'showCrudMenu'])->name('crud.menu');
 Route::get('/GDG', [DashboardController::class, 'showGuias'])->name('guia.menu');
 Route::get('/GDA', [DashboardController::class, 'showActividades'])->name('actividad.menu');
-
+    Route::get('/GDE', [DashboardController::class, 'showequipos'])->name('equipos.menu');
 // Rutas para la gestión de roles
 
 
@@ -100,6 +100,8 @@ Route::get('/admin', function () {
 Route::get('/supervisor', function () {
     return view('supervisor.dashboard');
 })->name('supervisor.dashboard')->middleware(CheckRole::class . ':Supervisor');
+
+
 
 
 

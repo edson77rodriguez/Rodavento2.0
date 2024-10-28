@@ -45,7 +45,7 @@ class DashboardController extends Controller
         $cruds = [
             ['name' => 'Gestion de Guias', 'description' => 'Gestión guias.', 'route' => 'asignar_guias.index'],
             ['name' => 'Gestion de las habilidades', 'description' => 'Gestión de habilidades de los guias.', 'route' => 'habilidades.index'],
-           
+
             // Otros CRUDs
         ];
         return view('GDG.GestionDG', compact('cruds', 'user'));
@@ -56,9 +56,23 @@ class DashboardController extends Controller
         $cruds = [
             ['name' => 'Gestion de Actividades', 'description' => 'Gestión Actividades.', 'route' => 'actividades.index'],
             ['name' => 'Asignacion de Actividades', 'description' => 'Gestión de actividades asignadas.', 'route' => 'asignar_actividades.index'],
-           
+
             // Otros CRUDs
         ];
         return view('GDA.GestionDA', compact('cruds', 'user'));
     }
+    public function showequipos()
+    {
+        $user = auth()->user();
+        $cruds = [
+            ['name' => 'Gestión de Mantenimientos', 'description' => 'Gestión de los mantenimientos realizados.', 'route' => 't_mantenimientos.index'],
+            ['name' => 'Gestión de Estado de Equipos', 'description' => 'Gestión de los estados de equipo.', 'route' => 'e_equipos.index'],
+
+
+            // Otros CRUDs que desees añadir
+        ];
+
+        return view('GDE.GestionDE', compact('cruds', 'user'));
+    }
+
 }
