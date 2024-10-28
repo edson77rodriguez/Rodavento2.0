@@ -19,9 +19,10 @@ class RolController extends Controller
     // Crear nuevo rol
     public function create()
     {
-        $permissions = Permission::all(); // Obtener todos los permisos disponibles
-        return view('admin.roles.create', compact('permissions')); // Asegúrate de que la vista exista
+        $permissions = Permission::all();
+        return view('admin.roles.create', compact('permissions'));
     }
+
 
     // Almacenar nuevo rol
     public function store(Request $request)
