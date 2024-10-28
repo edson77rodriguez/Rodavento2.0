@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\UserRoleController;
+use App\Http\Controllers\HabilidadController;
+use App\Http\Controllers\AsignarGuiaController;
+use App\Http\Controllers\ActividadController;
+use App\Http\Controllers\Asignar_actividadesController;
+
 
 
 Route::resource('roles', RolePermissionController::class);
@@ -38,9 +44,12 @@ Auth::routes();
 // Agrupar las rutas que requieren autenticación
 Route::middleware(['auth'])->group(function () {
     // Ruta del dashboard
-
+    Route::get('/assign-user-roles', [UserRoleController::class, 'assignRoles']);
 // Ruta para el menú de CRUDs
 Route::get('/GDS', [DashboardController::class, 'showCrudMenu'])->name('crud.menu');
+Route::get('/GDG', [DashboardController::class, 'showGuias'])->name('guia.menu');
+Route::get('/GDA', [DashboardController::class, 'showActividades'])->name('actividad.menu');
+
 // Rutas para la gestión de roles
 
 
@@ -70,12 +79,17 @@ Route::resource('permissions', PermissionController::class);
     Route::resource('t_mantenimientos', T_MantenimientoController::class);
     Route::resource('e_equipos', Estado_equipoController::class);
     Route::resource('areas', AreaController::class);
+    Route::resource('habilidades', HabilidadController::class);
+    Route::resource('actividades', ActividadController::class);
+    Route::resource('asignar_actividades', Asignar_actividadesController::class);
+
+Route::resource('asignar_guias', AsignarGuiaController::class);
    // Ruta protegida solo para Administrador
 Route::get('/admin', function () {
     return view('admin.dashboard');
 
 
-})->name('admin.dashboard')->middleware(CheckRole::class . ':Administrador');
+})->name('admin.dashboard');
 
 
 

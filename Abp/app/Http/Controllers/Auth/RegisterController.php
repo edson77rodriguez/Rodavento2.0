@@ -57,7 +57,7 @@ class RegisterController extends Controller
         $user = Auth::user();
 
         if ($user->rol_id == 1) {
-            return '/dashboard';
+            return '/admin';
         }
 
         return '/home';

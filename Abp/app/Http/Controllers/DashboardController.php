@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 class DashboardController extends Controller
 {
     public function __construct()
@@ -15,15 +16,12 @@ class DashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $isAdmin = $user->is_admin; // Asegúrate de que esto refleja tu lógica de rol
-
-        return view('admin.dashboard', compact('user', 'isAdmin'));
+        return view('admin.dashboard', compact('user'));
     }
 
     public function showCrudMenu()
     {
         $user = auth()->user();
-        $isAdmin = $user->is_admin; // Verificación de rol
 
         // Lista de CRUDs
         $cruds = [
@@ -33,12 +31,34 @@ class DashboardController extends Controller
             ['name' => 'Estado de Actividades', 'description' => 'Gestión de estado de actividades.', 'route' => 'e_actividades.index'],
             ['name' => 'Tipo de Mantenimiento', 'description' => 'Gestión de los tipos de mantenimiento.', 'route' => 't_mantenimientos.index'],
             ['name' => 'Estados del equipo', 'description' => 'Gestión de los estados de los equipos.', 'route' => 'e_equipos.index'],
-            ['name' => 'Areas', 'description' => 'Gestión de las areas de los usuarios.', 'route' => 'areas.index'],
+            ['name' => 'Areas', 'description' => 'Gestión de las áreas de los usuarios.', 'route' => 'areas.index'],
             // Otros CRUDs
         ];
 
         // Retornando la vista con los datos
-        return view('GDS.GestionDS', compact('cruds', 'user', 'isAdmin'));
+        return view('GDS.GestionDS', compact('cruds', 'user'));
     }
 
+    public function showGuias()
+    {
+        $user = auth()->user();
+        $cruds = [
+            ['name' => 'Gestion de Guias', 'description' => 'Gestión guias.', 'route' => 'asignar_guias.index'],
+            ['name' => 'Gestion de las habilidades', 'description' => 'Gestión de habilidades de los guias.', 'route' => 'habilidades.index'],
+           
+            // Otros CRUDs
+        ];
+        return view('GDG.GestionDG', compact('cruds', 'user'));
+    }
+    public function showActividades()
+    {
+        $user = auth()->user();
+        $cruds = [
+            ['name' => 'Gestion de Actividades', 'description' => 'Gestión Actividades.', 'route' => 'actividades.index'],
+            ['name' => 'Asignacion de Actividades', 'description' => 'Gestión de actividades asignadas.', 'route' => 'asignar_actividades.index'],
+           
+            // Otros CRUDs
+        ];
+        return view('GDA.GestionDA', compact('cruds', 'user'));
+    }
 }

@@ -11,24 +11,34 @@ return new class extends Migration
      */
     // En la migración recién creada, agrega lo siguiente:
     public function up()
-    {
-        Schema::table('roles', function (Blueprint $table) {
-            $table->string('guard_name')->default('web'); // o el nombre del guard que estés usando
-        });
-
-        Schema::table('permissions', function (Blueprint $table) {
+{
+    Schema::table('roles', function (Blueprint $table) {
+        if (!Schema::hasColumn('roles', 'guard_name')) {
             $table->string('guard_name')->default('web');
-        });
-    }
+        }
+    });
 
-    public function down()
-    {
-        Schema::table('roles', function (Blueprint $table) {
-            $table->dropColumn('guard_name');
-        });
+    Schema::table('permissions', function (Blueprint $table) {
+        if (!Schema::hasColumn('permissions', 'guard_name')) {
+            $table->string('guard_name')->default('web');
+        }
+    });
+}
 
-        Schema::table('permissions', function (Blueprint $table) {
+
+public function down()
+{
+    Schema::table('roles', function (Blueprint $table) {
+        if (Schema::hasColumn('roles', 'guard_name')) {
             $table->dropColumn('guard_name');
-        });
-    }
+        }
+    });
+
+    Schema::table('permissions', function (Blueprint $table) {
+        if (Schema::hasColumn('permissions', 'guard_name')) {
+            $table->dropColumn('guard_name');
+        }
+    });
+}
+
 };
