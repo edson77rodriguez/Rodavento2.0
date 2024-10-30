@@ -16,8 +16,5 @@ class Rol extends Model
     protected $fillable = ['nom_rol', 'guard_name']; // Agregar 'guard_name'
 
     // Relación con el modelo User
-    public function users()
-    {
-        return $this->hasMany(User::class);
-    }
+ 
 }

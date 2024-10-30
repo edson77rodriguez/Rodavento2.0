@@ -74,5 +74,18 @@ class DashboardController extends Controller
 
         return view('GDE.GestionDE', compact('cruds', 'user'));
     }
+    public function gestiondeareas()
+    {
+        $user = auth()->user();
+        $cruds = [
+            ['name' => 'Gestión de areas de encargado', 'description' => 'Gestión de las areas que se le asignan a cada encargado.', 'route' => 'encargados.index'],
+            ['name' => 'Gestión de areas de supervisores', 'description' => 'Gestión de las areas que se le asignan a cada supervisor', 'route' => 'e_equipos.index'],
+
+
+            // Otros CRUDs que desees añadir
+        ];
+
+        return view('encargados.E', compact('cruds', 'user'));
+    }
 
 }

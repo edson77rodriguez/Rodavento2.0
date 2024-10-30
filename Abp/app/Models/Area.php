@@ -9,4 +9,5 @@ class Area extends Model
     use HasFactory;
 
     protected $fillable = ['desc_area'];
+
 }

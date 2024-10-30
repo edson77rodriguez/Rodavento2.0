@@ -27,6 +27,7 @@
                             <p class="card-text"><strong>ID:</strong> {{ $habilidad->id }}</p>
                             <p class="card-text"><strong>Descripcion:</strong> {{ $habilidad->desc_habilidad }}</p>
 
+                                            
 
                             <div class="d-flex justify-content-between">
                                 <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewHabilidadModal{{ $habilidad->id }}">Ver</button>
@@ -52,7 +53,8 @@
                             <div class="modal-body">
                                 <p><strong>ID:</strong> {{ $habilidad->id }}</p>
                                 <p><strong>Nombre:</strong> {{ $habilidad->nom_hab }}</p>
-                                <p><strong>Descripción:</strong> {{ $habilidad->desc_habilidad }}</p>
+                                <p><strong>Descripción:</strong> {{ $habilidad->desc_habilidad }} </p>
+                               
                             </div>
                         </div>
                     </div>

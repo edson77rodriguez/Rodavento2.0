@@ -21,6 +21,7 @@ use App\Http\Controllers\HabilidadController;
 use App\Http\Controllers\AsignarGuiaController;
 use App\Http\Controllers\ActividadController;
 use App\Http\Controllers\Asignar_actividadesController;
+use App\Http\Controllers\EncargadoController;
 
 
 
@@ -50,6 +51,11 @@ Route::get('/GDS', [DashboardController::class, 'showCrudMenu'])->name('crud.men
 Route::get('/GDG', [DashboardController::class, 'showGuias'])->name('guia.menu');
 Route::get('/GDA', [DashboardController::class, 'showActividades'])->name('actividad.menu');
     Route::get('/GDE', [DashboardController::class, 'showequipos'])->name('equipos.menu');
+    Route::get('/encargados', [DashboardController::class, 'gestiondeareas'])->name('areas.menu');
+    Route::get('encargados/asignar/{user}', [EncargadoController::class, 'asignarVista'])->name('encargados.asignar');
+    Route::post('encargados/asignar/{user}', [EncargadoController::class, 'asignarArea'])->name('encargados.asignar.area');
+    Route::get('/encargados/asignar/{userId}', [EncargadoController::class, 'showAsignarArea'])->name('encargados.asignar');
+
 // Rutas para la gestión de roles
 
 
@@ -69,6 +75,7 @@ Route::resource('permissions', PermissionController::class);
     });
      // Gestión de Usuarios
      Route::resource('users', UserController::class);
+     Route::resource('encargados', EncargadoController::class);
 
     Route::resource('roles', RolController::class);
     Route::resource('direcciones', DireccionController::class);

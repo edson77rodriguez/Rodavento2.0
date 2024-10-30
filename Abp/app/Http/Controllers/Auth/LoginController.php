@@ -7,36 +7,22 @@ use App\Models\Direccion;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Rol;
-
+use App\Models\Guia; 
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
 
-    /**
-     * Show the login form.
-     *
-     * @return \Illuminate\View\View
-     */
     public function showLoginForm()
-    {  $direccions = Direccion::all(); // Cargar todas las direcciones
+    {
+        $direccions = Direccion::all(); // Cargar todas las direcciones
         $roles = Rol::all(); // Cargar todos los roles
 
         return view('auth.login', compact('direccions', 'roles')); // Pasar ambas variables a la vista
@@ -44,19 +30,30 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        // Verificar si el rol del usuario es "Guía" (ID = 3 o nombre del rol es "Guía")
+        if ($user->rol && ($user->rol->id == 3 || $user->rol->nom_rol == 'Guía')) {
+            // Verificar si el usuario ya está en la tabla guias
+            if (!Guia::where('user_id', $user->id)->exists()) {
+                // Crear una nueva entrada en la tabla guias
+                Guia::create([
+                    'user_id' => $user->id,
+                ]);
+            }
+        }
+
         // Redirigir según el rol del usuario
         if ($user->rol) {
             switch ($user->rol->nom_rol) {
                 case 'Administrador':
-                    return redirect()->route('admin.dashboard'); // Cambia a tu ruta de administrador
+                    return redirect()->route('admin.dashboard');
                 case 'Supervisor':
-                    return redirect()->route('supervisor.dashboard'); // Cambia a tu ruta de supervisor
+                    return redirect()->route('supervisor.dashboard');
                 default:
-                    return redirect()->route('home'); // Ruta por defecto
+                    return redirect()->route('home');
             }
         }
 
-        // Si no tiene rol, redirige a la página de acceso no autorizado o a otra ruta
+        // Redirección si no tiene rol asignado
         return redirect('/no-autorizado');
     }
 }

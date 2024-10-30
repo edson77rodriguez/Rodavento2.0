@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\Guia; 
 
 class RegisterController extends Controller
 {
@@ -50,6 +51,16 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'rol_id' => $data['rol_id'], // Guarda el rol
         ]);
+         // Verificar si el rol del usuario es "Guía" (ID = 3 o nombre del rol es "Guía")
+         if ($user->rol && ($user->rol->id == 3 || $user->rol->nom_rol == 'Guía')) {
+            // Verificar si el usuario ya está en la tabla guias
+            if (!Guia::where('user_id', $user->id)->exists()) {
+                // Crear una nueva entrada en la tabla guias
+                Guia::create([
+                    'user_id' => $user->id,
+                ]);
+            }
+        }
     }
 
     protected function redirectPath()
