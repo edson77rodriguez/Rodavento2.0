@@ -22,6 +22,9 @@ use App\Http\Controllers\AsignarGuiaController;
 use App\Http\Controllers\ActividadController;
 use App\Http\Controllers\Asignar_actividadesController;
 use App\Http\Controllers\EncargadoController;
+use App\Http\Controllers\EquipoController;
+
+Route::resource('equipos', EquipoController::class);
 
 
 

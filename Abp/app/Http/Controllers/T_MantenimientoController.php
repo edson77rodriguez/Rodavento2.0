@@ -8,21 +8,25 @@ class T_MantenimientoController extends Controller
 {
     public function index()
     {
-        $t_mantenimientos =T_Mantenimiento::all();
-        return view('admin.cruds.t_mantenimientos.index', compact('t_mantenimientos'));
+        $t__mantenimientos =T_Mantenimiento::all();
+        return view('admin.cruds.t_mantenimientos.index', compact('t__mantenimientos'));
     }
     public function create()
     {
     }
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'nom_tipo' => 'required',
-            'desc_t'=>'required',
+            'desc_m'=>'required',
+
         ]);
-    
+
+
         T_Mantenimiento::create($validatedData);
-    
+
+
         return redirect()->route('t_mantenimientos.index')->with('register',' ');
     }
     public function show(string $id)
@@ -31,7 +35,7 @@ class T_MantenimientoController extends Controller
     }
     public function edit(string $id)
     {
-       
+
     }
     public function update(Request $request, string $id)
     {

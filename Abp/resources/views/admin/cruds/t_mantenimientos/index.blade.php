@@ -19,7 +19,7 @@
 
     <div class="container mt-4">
     <div class="row">
-        @foreach ($t_mantenimientos as $t_mantenimiento)
+        @foreach ($t__mantenimientos as $t_mantenimiento)
             <div class="col-lg-4 col-md-4 col-sm-6 mb-6">
                 <div class="card h-100"> <!-- Añadido h-100 para que la tarjeta ocupe todo el espacio disponible -->
                     <div class="card-body">
@@ -134,8 +134,8 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 let form = document.createElement('form');
-                form.method = 'POST'; 
-                form.action = '/t_mantenimientos/' + id;
+                form.method = 'POST';
+                form.action = '/t__mantenimientos/' + id;
                 form.innerHTML = '@csrf @method("DELETE")';
                 document.body.appendChild(form);
                 form.submit();

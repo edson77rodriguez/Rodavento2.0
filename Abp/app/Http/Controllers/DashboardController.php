@@ -65,10 +65,10 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
         $cruds = [
-            ['name' => 'Gestión de Mantenimientos', 'description' => 'Gestión de los mantenimientos realizados.', 'route' => 't_mantenimientos.index'],
+            ['name' => 'Gestión de Tipos Mantenimientos', 'description' => 'Gestión de los tipos de mantenimientos .', 'route' => 't_mantenimientos.index'],
             ['name' => 'Gestión de Estado de Equipos', 'description' => 'Gestión de los estados de equipo.', 'route' => 'e_equipos.index'],
-
-
+            ['name' => 'Gestión de Las Categorias de equipo', 'description' => 'Gestión de las categorias de equipo.', 'route' => 'categorias.index'],
+            ['name' => 'Gestión de Equipo', 'description' => 'Gestión de Equipo.', 'route' => 'equipos.index'],
             // Otros CRUDs que desees añadir
         ];
 
