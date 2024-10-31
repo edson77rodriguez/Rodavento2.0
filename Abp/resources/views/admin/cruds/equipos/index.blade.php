@@ -27,6 +27,8 @@
                                 <p class="card-text"><strong>ID:</strong> {{ $equipo->id_equipo }}</p>
                                 <p class="card-text"><strong>Categoría:</strong> {{ $equipo->categoria->desc_cat ?? 'N/A' }}</p>
                                 <p class="card-text"><strong>Cantidad:</strong> {{ $equipo->cantidad }}</p>
+                                <p class="card-text"><strong>Descripcion:</strong> {{ $equipo->descripcion }}</p>
+
 
                                 <div class="d-flex justify-content-between">
                                     <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewEquipoModal{{ $equipo->id_equipo }}">Ver</button>
@@ -88,6 +90,10 @@
                                             </select>
                                         </div>
                                         <div class="mb-3">
+                                            <label for="descripcion{{ $equipo->id_equipo }}" class="form-label">Descripcion</label>
+                                            <input type="text" name="descripcion" id="descripcion{{ $equipo->id_equipo }}" value="{{ old('descripcion', $equipo->descripcion) }}" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
                                             <label for="cantidad{{ $equipo->id_equipo }}" class="form-label">Cantidad</label>
                                             <input type="number" name="cantidad" id="cantidad{{ $equipo->id_equipo }}" value="{{ old('cantidad', $equipo->cantidad) }}" class="form-control" required>
                                         </div>
@@ -118,11 +124,16 @@
                             </div>
                             <div class="mb-3">
                                 <label for="id" class="form-label">Categoría</label>
-                                <select name="id" id="id" class="form-control" required>
+                                <select name="categoria_id" id="categoria_id" class="form-control" required>
                                     @foreach($categorias as $categoria)
                                         <option value="{{ $categoria->id }}">{{ $categoria->desc_cat }}</option>
                                     @endforeach
                                 </select>
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripcion del equipo</label>
+                                <input type="text" name="descripcion" id="descripcion" class="form-control" required>
                             </div>
                             <div class="mb-3">
                                 <label for="cantidad" class="form-label">Cantidad</label>
@@ -176,3 +187,8 @@
         }
     </script>
 @endsection
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif

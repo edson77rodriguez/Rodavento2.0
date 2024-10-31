@@ -19,17 +19,17 @@ class Asignar_actividades extends Model
 
     public function guia()
     {
-        return $this->belongsTo(User::class, 'guia_id');
+        return $this->belongsTo(Guia::class);
     }
 
     public function supervisor()
     {
-        return $this->belongsTo(User::class, 'supervisor_id');
+        return $this->belongsTo(Supervisor::class);
     }
 
     public function encargado()
     {
-        return $this->belongsTo(User::class, 'encargado_id');
+        return $this->belongsTo(Encargado::class);
     }
 
     public function actividad()
@@ -37,8 +37,9 @@ class Asignar_actividades extends Model
         return $this->belongsTo(Actividad::class);
     }
 
-    public function estado()
-    {
-        return $this->belongsTo(EstadoActividad::class, 'estado_a_id');
-    }
+    public function estadoActividad()
+{
+    return $this->belongsTo(Estado_actividad::class, 'estado_a_id'); // Asegúrate de que el segundo parámetro es correcto
+}
+
 }

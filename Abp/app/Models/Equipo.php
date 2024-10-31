@@ -16,14 +16,14 @@ class Equipo extends Model
 
     protected $fillable = [
         'nom_equipo',
-        'id',  // Este es el campo que se usa como clave foránea para la categoría
+        'categoria_id',  
         'descripcion',
         'cantidad',
     ];
 
-    // Relación con el modelo de categoría
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class, 'id'); // Usar 'id' para la relación
+        return $this->belongsTo(Categoria::class, 'categoria_id');
     }
+    
 }

@@ -23,6 +23,8 @@ use App\Http\Controllers\ActividadController;
 use App\Http\Controllers\Asignar_actividadesController;
 use App\Http\Controllers\EncargadoController;
 use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\SupervisorController;
+
 
 Route::resource('equipos', EquipoController::class);
 
@@ -54,10 +56,14 @@ Route::get('/GDS', [DashboardController::class, 'showCrudMenu'])->name('crud.men
 Route::get('/GDG', [DashboardController::class, 'showGuias'])->name('guia.menu');
 Route::get('/GDA', [DashboardController::class, 'showActividades'])->name('actividad.menu');
     Route::get('/GDE', [DashboardController::class, 'showequipos'])->name('equipos.menu');
-    Route::get('/encargados', [DashboardController::class, 'gestiondeareas'])->name('areas.menu');
+    Route::get('/GDAC', [DashboardController::class, 'gestiondeareas'])->name('areas.menu');
     Route::get('encargados/asignar/{user}', [EncargadoController::class, 'asignarVista'])->name('encargados.asignar');
     Route::post('encargados/asignar/{user}', [EncargadoController::class, 'asignarArea'])->name('encargados.asignar.area');
     Route::get('/encargados/asignar/{userId}', [EncargadoController::class, 'showAsignarArea'])->name('encargados.asignar');
+    Route::get('supervisores/asignar/{user}', [SupervisorController::class, 'asignarVista'])->name('supervisores.asignar');
+    Route::post('supervisores/asignar/{user}', [SupervisorController::class, 'asignarArea'])->name('supervisores.asignar.area');
+    Route::get('/supervisores/asignar/{userId}', [SupervisorController::class, 'showAsignarArea'])->name('supervisores.asignar');
+    Route::resource('supervisores', SupervisorController::class);
 
 // Rutas para la gestión de roles
 

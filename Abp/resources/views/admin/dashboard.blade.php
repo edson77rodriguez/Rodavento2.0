@@ -94,7 +94,7 @@
 
 <li class="nav-item">
         @if(Auth::user()->rol_id == 1)
-          <a class="nav-link  active" href="encargados">
+          <a class="nav-link  active" href="GDAC">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title></title>

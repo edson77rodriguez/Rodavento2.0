@@ -79,13 +79,13 @@ class DashboardController extends Controller
         $user = auth()->user();
         $cruds = [
             ['name' => 'Gestión de areas de encargado', 'description' => 'Gestión de las areas que se le asignan a cada encargado.', 'route' => 'encargados.index'],
-            ['name' => 'Gestión de areas de supervisores', 'description' => 'Gestión de las areas que se le asignan a cada supervisor', 'route' => 'e_equipos.index'],
+            ['name' => 'Gestión de areas de supervisores', 'description' => 'Gestión de las areas que se le asignan a cada supervisor', 'route' => 'supervisores.index'],
 
 
             // Otros CRUDs que desees añadir
         ];
 
-        return view('encargados.E', compact('cruds', 'user'));
+        return view('GDAC.E', compact('cruds', 'user'));
     }
 
 }

@@ -2,7 +2,7 @@
 
 @section('crud_content')
 <div class="container">
-    <h1>Asignar Área a Encargado</h1>
+    <h1>Asignar Área a Supervisor</h1>
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -22,7 +22,7 @@
             <p>Teléfono: {{ $user->telefono }}</p>
         </div>
         <div class="card-body">
-            <form action="{{ route('encargados.asignar', $user->id) }}" method="POST">
+            <form action="{{ route('supervisores.asignar', $user->id) }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="area_id">Seleccionar Área:</label>
@@ -34,7 +34,7 @@
                     </select>
                 </div>
                 <button type="submit" class="btn btn-success">Asignar Área</button>
-                <a href="{{ route('encargados.index') }}" class="btn btn-secondary">Volver</a>
+                <a href="{{ route('supervisores.index') }}" class="btn btn-secondary">Volver</a>
             </form>
         </div>
     </div>

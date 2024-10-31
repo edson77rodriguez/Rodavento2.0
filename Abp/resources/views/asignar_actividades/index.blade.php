@@ -33,12 +33,12 @@
         <tbody>
             @foreach ($asignaciones as $asignacion)
                 <tr>
-                    <td>{{ $asignacion->guia->name }}</td>
-                    <td>{{ $asignacion->supervisor->name }}</td>
-                    <td>{{ $asignacion->encargado->name }}</td>
+                    <td>{{ $asignacion->guia->user->nom }} {{ $asignacion->guia->user->ap }} </td>
+                    <td>{{ $asignacion->supervisor->user->nom }} {{ $asignacion->supervisor->user->ap }} </td>
+                    <td>{{ $asignacion->encargado->user->nom }} {{ $asignacion->encargado->user->ap }} </td>
                     <td>{{ $asignacion->actividad->nom_act }}</td>
                     <td>{{ $asignacion->fecha_asignada }}</td>
-                    <td>{{ $asignacion->estadoActividad->nombre_estado }}</td>
+                    <td>{{ $asignacion->estadoActividad->desc_estado_a }}</td>
                     <td>
                         <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewAsignacionModal{{ $asignacion->id }}">Ver</button>
                         <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editAsignacionModal{{ $asignacion->id }}">Editar</button>
@@ -60,12 +60,12 @@
                             </div>
                             <div class="modal-body">
                                 <p><strong>ID:</strong> {{ $asignacion->id }}</p>
-                                <p><strong>Guía:</strong> {{ $asignacion->guia->name }}</p>
-                                <p><strong>Supervisor:</strong> {{ $asignacion->supervisor->name }}</p>
-                                <p><strong>Encargado:</strong> {{ $asignacion->encargado->name }}</p>
+                                <p><strong>Guía:</strong> {{ $asignacion->guia->user->nom }} {{ $asignacion->guia->user->ap }} {{ $asignacion->guia->user->am }}</p>
+                                <p><strong>Supervisor:</strong> {{ $asignacion->supervisor->user->nom }} {{ $asignacion->supervisor->user->ap }} {{ $asignacion->supervisor->user->am }}</p>
+                                <p><strong>Encargado:</strong> {{ $asignacion->encargado->user->nom }} {{ $asignacion->encargado->user->ap }} {{ $asignacion->encargado->user->am }}</p>
                                 <p><strong>Actividad:</strong> {{ $asignacion->actividad->nom_act }}</p>
                                 <p><strong>Fecha Asignada:</strong> {{ $asignacion->fecha_asignada }}</p>
-                                <p><strong>Estado:</strong> {{ $asignacion->estadoActividad->nombre_estado }}</p>
+                                <p><strong>Estado:</strong> {{ $asignacion->estadoActividad->desc_estado_a }}</p>
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                                         <label for="guia_id" class="form-label">Guía</label>
                                         <select name="guia_id" id="guia_id" class="form-select" required>
                                             @foreach ($guias as $guia)
-                                                <option value="{{ $guia->id }}" {{ $asignacion->guia_id == $guia->id ? 'selected' : '' }}>{{ $guia->name }}</option>
+                                                <option value="{{ $guia->id }}" {{ $asignacion->guia_id == $guia->id ? 'selected' : '' }}>{{ $guia->user->nom }} {{ $guia->user->ap }} {{ $guia->user->am }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -95,7 +95,7 @@
                                         <label for="supervisor_id" class="form-label">Supervisor</label>
                                         <select name="supervisor_id" id="supervisor_id" class="form-select" required>
                                             @foreach ($supervisores as $supervisor)
-                                                <option value="{{ $supervisor->id }}" {{ $asignacion->supervisor_id == $supervisor->id ? 'selected' : '' }}>{{ $supervisor->name }}</option>
+                                                <option value="{{ $supervisor->id }}" {{ $asignacion->supervisor_id == $supervisor->id ? 'selected' : '' }}>{{ $guia->user->nom }} {{ $guia->user->ap }} {{ $guia->user->am }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -103,7 +103,7 @@
                                         <label for="encargado_id" class="form-label">Encargado</label>
                                         <select name="encargado_id" id="encargado_id" class="form-select" required>
                                             @foreach ($encargados as $encargado)
-                                                <option value="{{ $encargado->id }}" {{ $asignacion->encargado_id == $encargado->id ? 'selected' : '' }}>{{ $encargado->name }}</option>
+                                                <option value="{{ $encargado->id }}" {{ $asignacion->encargado_id == $encargado->id ? 'selected' : '' }}>{{ $encargado->user->nom }} {{ $encargado->user->ap }} {{ $encargado->user->am }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -123,7 +123,7 @@
                                         <label for="estado_a_id" class="form-label">Estado</label>
                                         <select name="estado_a_id" id="estado_a_id" class="form-select" required>
                                             @foreach ($estados as $estado)
-                                                <option value="{{ $estado->id }}" {{ $asignacion->estado_a_id == $estado->id ? 'selected' : '' }}>{{ $estado->nombre_estado }}</option>
+                                                <option value="{{ $estado->id }}" {{ $asignacion->estado_a_id == $estado->id ? 'selected' : '' }}>{{ $estado->desc_estado_a }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -152,7 +152,7 @@
                             <label for="guia_id" class="form-label">Guía</label>
                             <select name="guia_id" id="guia_id" class="form-select" required>
                                 @foreach ($guias as $guia)
-                                    <option value="{{ $guia->id }}">{{ $guia->name }}</option>
+                                    <option value="{{ $guia->id }}">{{ $guia->user->nom }} {{ $guia->user->ap }} {{ $guia->user->am }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -160,7 +160,7 @@
                             <label for="supervisor_id" class="form-label">Supervisor</label>
                             <select name="supervisor_id" id="supervisor_id" class="form-select" required>
                                 @foreach ($supervisores as $supervisor)
-                                    <option value="{{ $supervisor->id }}">{{ $supervisor->name }}</option>
+                                    <option value="{{ $supervisor->id }}">{{ $supervisor->user->nom }} {{ $supervisor->user->ap }} {{ $supervisor->user->am }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -168,7 +168,7 @@
                             <label for="encargado_id" class="form-label">Encargado</label>
                             <select name="encargado_id" id="encargado_id" class="form-select" required>
                                 @foreach ($encargados as $encargado)
-                                    <option value="{{ $encargado->id }}">{{ $encargado->name }}</option>
+                                    <option value="{{ $encargado->id }}">{{ $encargado->user->nom }} {{ $encargado->user->ap }} {{ $encargado->user->am }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -188,11 +188,11 @@
                             <label for="estado_a_id" class="form-label">Estado</label>
                             <select name="estado_a_id" id="estado_a_id" class="form-select" required>
                                 @foreach ($estados as $estado)
-                                    <option value="{{ $estado->id }}">{{ $estado->nombre_estado }}</option>
+                                    <option value="{{ $estado->id }}">{{ $estado->desc_estado_a }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Crear Asignación</button>
+                        <button type="submit" class="btn btn-primary">Guardar Asignación</button>
                     </form>
                 </div>
             </div>
@@ -201,10 +201,10 @@
 </div>
 
 <script>
-    function confirmDelete(id) {
-        if (confirm('¿Estás seguro de que quieres eliminar esta asignación?')) {
-            document.querySelector(`form[action*="${id}"]`).submit();
-        }
+function confirmDelete(id) {
+    if (confirm('¿Estás seguro de que deseas eliminar esta asignación?')) {
+        document.querySelector(`form[action*="${id}"]`).submit();
     }
+}
 </script>
 @endsection

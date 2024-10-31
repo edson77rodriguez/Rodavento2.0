@@ -30,7 +30,7 @@
             @foreach ($actividades as $actividad)
                 <tr>
                     <td>{{ $actividad->nom_act }}</td>
-                    <td>{{ $actividad->duracion->nom_duracion ?? 'N/A' }}</td>
+                    <td>{{ $actividad->duracion->desc_duracion ?? 'N/A' }}</td>
                     <td>
                         <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewActividadModal{{ $actividad->id }}">Ver</button>
                         <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editActividadModal{{ $actividad->id }}">Editar</button>
@@ -53,7 +53,7 @@
                             <div class="modal-body">
                                 <p><strong>ID:</strong> {{ $actividad->id }}</p>
                                 <p><strong>Nombre:</strong> {{ $actividad->nom_act }}</p>
-                                <p><strong>Duración:</strong> {{ $actividad->duracion->nom_duracion ?? 'N/A' }}</p>
+                                <p><strong>Duración:</strong> {{ $actividad->duracion->desc_duracion ?? 'N/A' }}</p>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                                         <label for="duracion_id{{ $actividad->id }}" class="form-label">Duración</label>
                                         <select name="duracion_id" id="duracion_id{{ $actividad->id }}" class="form-select" required>
                                             @foreach ($duraciones as $duracion)
-                                                <option value="{{ $duracion->id }}" {{ $actividad->duracion_id == $duracion->id ? 'selected' : '' }}>{{ $duracion->nom_duracion }}</option>
+                                                <option value="{{ $duracion->id }}" {{ $actividad->duracion_id == $duracion->id ? 'selected' : '' }}>{{ $duracion->desc_duracion }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -112,7 +112,7 @@
                             <label for="duracion_id" class="form-label">Duración</label>
                             <select name="duracion_id" id="duracion_id" class="form-select" required>
                                 @foreach ($duraciones as $duracion)
-                                    <option value="{{ $duracion->id }}">{{ $duracion->nom_duracion }}</option>
+                                    <option value="{{ $duracion->id }}">{{ $duracion->desc_duracion }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -146,9 +146,7 @@
             }
         });
     }
-</script>
-
-@if(session('register'))
+    @if(session('register'))
     Swal.fire({
         icon: 'success',
         title: 'Éxito',
@@ -169,4 +167,7 @@
         text: '{{ session('destroy') }}',
     });
 @endif
+</script>
+
+
 @endsection

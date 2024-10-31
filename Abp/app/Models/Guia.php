@@ -11,8 +11,9 @@ class Guia extends Model
 
     protected $fillable = ['user_id'];
 
+   
     public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class); // Cambiar a belongsTo
     }
 }
