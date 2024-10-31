@@ -3,63 +3,74 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mantenimiento;
+use App\Models\Material;
+use App\Models\T_Mantenimiento;
+use App\Models\Encargado;
 use Illuminate\Http\Request;
-
 class MantenimientoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Muestra la lista de mantenimientos
     public function index()
     {
-        //
+        $mantenimientos = Mantenimiento::all();
+        $materiales = Material::all();
+        $tipos = T_Mantenimiento::all();
+        $encargados = Encargado::all();
+
+        return view('mantenimientos.index', compact('mantenimientos', 'materiales', 'tipos', 'encargados'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Guarda un nuevo mantenimiento
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'material_id' => 'required|exists:materials,id',
+            'fecha_mantenimiento' => 'required|date',
+            'tipo_m' => 'required|exists:t__mantenimientos,id',
+            'observaciones' => 'required|string',
+            'encargado_id' => 'required|exists:encargados,id',
+        ]);
+
+        Mantenimiento::create([
+            'material_id' => $request->material_id,
+            'fecha_mantenimiento' => $request->fecha_mantenimiento,
+            'tipo_m' => $request->tipo_m,
+            'observaciones' => $request->observaciones,
+            'encargado_id' => $request->encargado_id,
+        ]);
+
+        return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento creado exitosamente');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Mantenimiento $mantenimiento)
+    // Actualiza un mantenimiento existente
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'material_id' => 'required|exists:materials,id',
+            'fecha_mantenimiento' => 'required|date',
+            'tipo_m' => 'required|exists:t__mantenimientos,id',
+            'observaciones' => 'required|string',
+            'encargado_id' => 'required|exists:encargados,id',
+        ]);
+
+        $mantenimiento = Mantenimiento::findOrFail($id);
+        $mantenimiento->update([
+            'material_id' => $request->material_id,
+            'fecha_mantenimiento' => $request->fecha_mantenimiento,
+            'tipo_m' => $request->tipo_m,
+            'observaciones' => $request->observaciones,
+            'encargado_id' => $request->encargado_id,
+        ]);
+
+        return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento actualizado exitosamente');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Mantenimiento $mantenimiento)
+    // Elimina un mantenimiento
+    public function destroy($id)
     {
-        //
-    }
+        $mantenimiento = Mantenimiento::findOrFail($id);
+        $mantenimiento->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Mantenimiento $mantenimiento)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Mantenimiento $mantenimiento)
-    {
-        //
+        return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento eliminado exitosamente');
     }
 }

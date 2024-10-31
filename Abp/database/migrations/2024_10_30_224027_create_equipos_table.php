@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('equipos', function (Blueprint $table) {
-            $table->id('id_equipo'); // Definir id principal con nombre específico
+            $table->id(); // Definir id principal con nombre específico
             $table->string('nom_equipo', 100);
             $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
             $table->text('descripcion')->nullable(); 

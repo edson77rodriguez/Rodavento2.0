@@ -33,7 +33,7 @@
                                 <div class="d-flex justify-content-between">
                                     <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewEquipoModal{{ $equipo->id_equipo }}">Ver</button>
                                     <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editEquipoModal{{ $equipo->id_equipo }}">Editar</button>
-                                    <form action="{{ route('equipos.destroy', $equipo->id_equipo) }}" method="POST" style="display: inline;">
+                                    <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $equipo->id_equipo }}')">Eliminar</button>
@@ -71,7 +71,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="POST" action="{{ route('equipos.update', $equipo->id_equipo) }}">
+                                    <form method="POST" action="{{ route('equipos.update', $equipo->id) }}">
                                         @csrf
                                         @method('PUT')
                                         <div class="mb-3">

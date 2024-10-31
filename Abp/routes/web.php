@@ -24,9 +24,14 @@ use App\Http\Controllers\Asignar_actividadesController;
 use App\Http\Controllers\EncargadoController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\SupervisorController;
+use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\MantenimientoController;
+
 
 
 Route::resource('equipos', EquipoController::class);
+Route::resource('materiales', MaterialController::class);
+Route::resource('mantenimientos', MantenimientoController::class);
 
 
 
