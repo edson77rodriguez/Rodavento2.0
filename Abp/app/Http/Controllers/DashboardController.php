@@ -78,6 +78,7 @@ public function showUsers()
             ['name' => 'Gestión de Equipo', 'description' => 'Gestión de Equipo.', 'route' => 'equipos.index'],
             ['name' => 'Gestión de Materiales', 'description' => 'Gestión de equipos agrupados.', 'route' => 'materiales.index'],
             ['name' => 'Gestión de Mantenimientos', 'description' => 'Gestión de mantenimientos de equipos.', 'route' => 'mantenimientos.index'],
+            ['name' => 'Gestión de Asignacion a actividades', 'description' => 'Gestión de materiales y guias encargados de estos.', 'route' => 'asignar_equipos.index'],
 
             // Otros CRUDs que desees añadir
         ];

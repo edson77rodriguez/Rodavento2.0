@@ -27,6 +27,8 @@ use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MantenimientoController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\Asignar_EquipoController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -91,6 +93,8 @@ Route::middleware(['auth'])->group(function () {
         'actividades' => ActividadController::class,
         'asignar_actividades' => Asignar_actividadesController::class,
         'asignar_guias' => AsignarGuiaController::class,
+        'asignar_equipos' => Asignar_EquipoController::class,
+
         'users' => UserController::class,
     ]);
     // Roles and Permissions
