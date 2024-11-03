@@ -34,7 +34,7 @@
                     <td>{{ $mantenimiento->material->equipo->nom_equipo }}</td>
                     <td>{{ $mantenimiento->encargado->user->nom }} {{ $mantenimiento->encargado->user->ap }}</td>
                     <td>{{ $mantenimiento->fecha_mantenimiento }}</td>
-                    <td>{{ $mantenimiento->estadoMantenimiento->desc_estado }}</td>
+                    <td>{{ $mantenimiento->tipoMantenimiento->nom_tipo }}</td>
                     <td>
                         <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewMantenimientoModal{{ $mantenimiento->id }}">Ver</button>
                         <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editMantenimientoModal{{ $mantenimiento->id }}">Editar</button>
@@ -56,10 +56,10 @@
                             </div>
                             <div class="modal-body">
                                 <p><strong>ID:</strong> {{ $mantenimiento->id }}</p>
-                                <p><strong>Equipo:</strong> {{ $mantenimiento->equipo->nombre }}</p>
+                                <p><strong>Equipo:</strong> {{ $mantenimiento->material->equipo->nom_equipo }}</p>
                                 <p><strong>Encargado:</strong> {{ $mantenimiento->encargado->user->nom }} {{ $mantenimiento->encargado->user->ap }}</p>
                                 <p><strong>Fecha Programada:</strong> {{ $mantenimiento->fecha_programada }}</p>
-                                <p><strong>Estado:</strong> {{ $mantenimiento->estadoMantenimiento->desc_estado }}</p>
+                                <p><strong>Estado:</strong> {{ $mantenimiento->tipoMantenimiento->nom_tipo }}</p>
                             </div>
                         </div>
                     </div>
@@ -80,8 +80,8 @@
                                     <div class="mb-3">
                                         <label for="tipo_m" class="form-label">Tipo de Mantenimiento</label>
                                         <select name="tipo_m" id="tipo_m" class="form-select" required>
-                                            @foreach ($tiposMantenimientos as $tiposMantenimiento)
-                                                <option value="{{ $tiposMantenimiento->id }}" {{ $mantenimiento->tipo_m == $tiposMantenimiento->id ? 'selected' : '' }}>{{ $tiposMantenimiento->nom_tipo }}</option>
+                                            @foreach ($tipos as $tipo)
+                                                <option value="{{ $tipo->id }}" {{ $mantenimiento->tipo_m == $tipo->id ? 'selected' : '' }}>{{ $tipo->nom_tipo }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -97,14 +97,7 @@
                                         <label for="fecha_mantenimiento" class="form-label">Fecha Programada</label>
                                         <input type="date" name="fecha_mantenimiento" id="fecha_mantenimiento" value="{{ $mantenimiento->fecha_mantenimiento }}" class="form-control" required>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="estado_id" class="form-label">Estado</label>
-                                        <select name="estado_id" id="estado_id" class="form-select" required>
-                                            @foreach ($estados as $estado)
-                                                <option value="{{ $estado->id }}" {{ $mantenimiento->estado_id == $estado->id ? 'selected' : '' }}>{{ $estado->desc_estado }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                   
                                     <button type="submit" class="btn btn-primary">Actualizar</button>
                                 </form>
                             </div>
@@ -152,8 +145,8 @@
                             </select>
                         </div>
                          <div class="mb-3">
-                            <label for="fecha_programada" class="form-label">Fecha Programada</label>
-                            <input type="date" name="fecha_programada" id="fecha_programada" class="form-control" required>
+                            <label for="fecha_mantenimiento" class="form-label">Fecha Programada</label>
+                            <input type="date" name="fecha_mantenimiento" id="fecha_mantenimiento" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="observaciones" class="form-label">observaciones</label>

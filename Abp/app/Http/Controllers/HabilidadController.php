@@ -54,6 +54,7 @@ class HabilidadController extends Controller
     {
         $habilidad = Habilidad::findOrFail($id);
         $habilidad->delete();
-        return redirect()->route('habilidades.index')->with('destroy', 'Habilidad eliminada exitosamente.');
+
+        return redirect()->route('habilidades.index')->with('destroy',' ');
     }
 }

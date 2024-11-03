@@ -21,8 +21,10 @@ class RegisterController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest');
+        // Middleware para usuarios autenticados y aprobados
+        $this->middleware(['auth']);
     }
+
 
     protected function validator(array $data)
     {
@@ -67,18 +69,21 @@ class RegisterController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->rol_id == 1) {
+        if ($user->rol_nom == 'Administrador') {
             return '/admin';
         }
-
+        if ($user->rol_nom == 'Supervisor') {
+            return '/admin';
+        }
+        if ($user->rol_nom == 'Encargado') {
+            return '/admin';
+        }
+        if ($user->rol_nom == 'Guia') {
+            return '/home';
+        }
         return '/home';
     }
 
-    /**
-     * Muestra el formulario de registro.
-     *
-     * @return \Illuminate\View\View
-     */
     public function showRegistrationForm()
     {
         $roles = Rol::all(); // Obtiene todos los roles disponibles

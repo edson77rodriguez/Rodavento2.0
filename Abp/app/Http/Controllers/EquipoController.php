@@ -25,7 +25,7 @@ class EquipoController extends Controller
         ]);
 
         Equipo::create($validatedData);
-        return redirect()->route('equipos.index')->with('success', 'Registro exitoso');
+        return redirect()->route('equipos.index')->with('register',' ');
 
     }
 
@@ -53,13 +53,13 @@ class EquipoController extends Controller
 
         $equipo = Equipo::findOrFail($id);
         $equipo->update($validatedData);
-        return redirect()->route('equipos.index')->with('success', 'Equipo actualizado correctamente');
+        return redirect()->route('equipos.index')->with('modify',' ');
     }
 
     public function destroy($id)
     {
         $equipo = Equipo::findOrFail($id);
         $equipo->delete();
-        return redirect()->route('equipos.index')->with('success', 'Equipo eliminado correctamente');
+        return redirect()->route('equipos.index')->with('destroy',' ');
     }
 }

@@ -19,12 +19,12 @@ class Material extends Model
     
     public function equipo()
     {
-        return $this->belongsTo(Equipo::class);
+        return $this->belongsTo(Equipo::class, 'id_equipo');
     }
 
-    public function estadoequipo()
+    public function estadoEquipo()
     {
-        return $this->belongsTo(Estado_equipo::class);
+        return $this->belongsTo(Estado_equipo::class, 'estado_e_id');
     }
 
 }

@@ -14,10 +14,17 @@ class DashboardController extends Controller
     }
 
     public function index()
-    {
-        $user = auth()->user();
-        return view('admin.dashboard', compact('user'));
-    }
+{
+    $user = auth()->user();
+    dd($user); // Verifica si el usuario está definido y qué datos tiene
+    return view('admin.dashboard', compact('user'));
+}
+public function showUsers()
+{
+    $users = User::all(); // O el método que uses para obtener los usuarios
+    return view('admin.users.index', compact('users')); // Asegúrate de que la ruta a la vista sea correcta
+}
+
 
     public function showCrudMenu()
     {

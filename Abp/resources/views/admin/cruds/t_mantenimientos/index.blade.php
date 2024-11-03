@@ -29,11 +29,11 @@
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewT_MantenimientoModal{{ $t_mantenimiento->id }}">Ver</button>
                             <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editT_MantenimientoModal{{ $t_mantenimiento->id }}">Editar</button>
-                            <form action="{{ route('t_mantenimientos.destroy', $t_mantenimiento->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $t_mantenimiento->id }}')">Eliminar</button>
-                            </form>
+                            <form id="delete-form-{{ $t_mantenimiento->id }}" action="{{ route('t_mantenimientos.destroy', $t_mantenimiento->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $t_mantenimiento->id }}')">Eliminar</button>
+                                </form>
                         </div>
                     </div>
                 </div>
@@ -122,26 +122,21 @@
 
 <script>
     function confirmDelete(id) {
-        Swal.fire({
-            title: 'Eliminar',
-            text: '¿Estás seguro de que deseas eliminar esta tipo de mantenimiento?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '/t__mantenimientos/' + id;
-                form.innerHTML = '@csrf @method("DELETE")';
-                document.body.appendChild(form);
-                form.submit();
-            }
-        });
-    }
+    Swal.fire({
+        title: 'Eliminar',
+        text: '¿Estás seguro de que deseas eliminar este tipo de mantenimiento?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById(`delete-form-${id}`).submit();
+        }
+    });
+}
     function RegistroExitoso() {
         Swal.fire({
             icon: 'success',

@@ -12,7 +12,6 @@ class Equipo extends Model
     protected $table = 'equipos';
 
     // Especificar la clave primaria si no es "id"
-    protected $primaryKey = 'id_equipo';
 
     protected $fillable = [
         'nom_equipo',

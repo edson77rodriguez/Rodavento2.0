@@ -15,13 +15,15 @@ class MaterialController extends Controller
         $materiales = Material::all();
         $equipos = Equipo::all();
         $estados = Estado_equipo::all();
+        $materiales = Material::with(['estadoEquipo', 'equipo'])->get();
 
         return view('materiales.index', compact('materiales', 'equipos', 'estados'));
     }
     // Guarda una nueva asignación
     public function store(Request $request)
     {
-        $request->validate([
+        
+        $validatedData = $request->validate([
             'codigo_m' => 'required',
             'id_equipo' => 'required|exists:equipos,id',
             'estado_e_id' => 'required|exists:estado_equipos,id',
@@ -30,13 +32,7 @@ class MaterialController extends Controller
             
         ]);
 
-        Asignar_actividades::create([
-            'codigo_m' => $request->codigo_m,
-            'id_equipo' => $request->id_equipo,
-            'estado_e_id' => $request->estado_e_id,
-            'fecha_asignacion' => $request->fecha_asignacion,
-            'fecha_mantenimiento' => $request->fecha_mantenimiento,
-        ]);
+        Material::create($validatedData);
 
         return redirect()->route('materiales.index')->with('success', 'Asignación creada exitosamente');
     }

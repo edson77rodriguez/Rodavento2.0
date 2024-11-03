@@ -34,17 +34,17 @@
                 <tr>
                     <td>{{ $material->equipo->nom_equipo }}</td>
                     <td>{{ $material->codigo_m }}  </td>
-                    <td>{{ $material->actividad->estadoequipo->desc_estado_e }}</td>
+                    <td>{{ $material->estadoequipo->desc_estado_e }}</td>
                     <td>{{ $material->fecha_asignacion }}</td>
                     <td>{{ $material->fecha_mantenimiento }}</td>
                     <td>
                         <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewAsignacionModal{{ $material->id }}">Ver</button>
                         <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editAsignacionModal{{ $material->id }}">Editar</button>
-                        <form action="{{ route('materiales.destroy', $material->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $material->id }}')">Eliminar</button>
-                        </form>
+                        <form id="delete-form-{{ $material->id }}" action="{{ route('materiales.destroy', $material->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $material->id }}')">Eliminar</button>
+                                </form>
                     </td>
                 </tr>
 
@@ -60,7 +60,7 @@
                                 <p><strong>ID:</strong> {{ $material->id }}</p>
                                 <p><strong>Equipo:</strong> {{ $material->equipo->nom_equipo }}</p>
                                 <p><strong>Codigo del Equipo:</strong> {{ $material->codigo_m }}</p>
-                                <p><strong>Estado:</strong> {{ $material->actividad->estadoequipo->desc_estado_e }}</p>
+                                <p><strong>Estado:</strong> {{ $material->estadoequipo->desc_estado_e }}</p>
                                 <p><strong>Fecha de asignacion:</strong>{{ $material->fecha_asignacion }}</p>
                                 <p><strong>Fecha de proximo mantenimiento:</strong> {{ $material->fecha_mantenimiento }}</p>
                             </div>
@@ -84,7 +84,7 @@
                                         <label for="equipo_id" class="form-label">Equipo</label>
                                         <select name="equipo_id" id="equipo_id" class="form-select" required>
                                             @foreach ($equipos as $equipo)
-                                                <option value="{{ $equipo->id }}" {{ $asignacion->equipo == $equipo->id ? 'selected' : '' }}>{{ $equipo->nom_equipo }} </option>
+                                                <option value="{{ $equipo->id }}" {{ $material->id_equipo == $equipo->id ? 'selected' : '' }}>{{ $equipo->nom_equipo }} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -97,7 +97,7 @@
                                         <label for="estado_e_id" class="form-label">Supervisor</label>
                                         <select name="estado_e_id" id="estado_e_id" class="form-select" required>
                                             @foreach ($estados as $estado)
-                                                <option value="{{ $estado->id }}" {{ $asignacion->estado_e_id == $estado->id ? 'selected' : '' }}>{{ $estado->desc_estado_e }} </option>
+                                                <option value="{{ $estado->id }}" {{ $material->estado_e_id == $estado->id ? 'selected' : '' }}>{{ $estado->desc_estado_e }} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -134,17 +134,19 @@
                     <form method="POST" action="{{ route('materiales.store') }}">
                         @csrf
                         <div class="mb-3">
-                            <label for="equipo_id" class="form-label">Guía</label>
-                            <select name="equipo_id" id="equipo_id" class="form-select" required>
+                                <label for="codigo_m" class="form-label">Codigo del equipo</label>
+                                <input type="text" name="codigo_m" id="codigo_m" class="form-control" required>
+                                 </div>
+
+                        <div class="mb-3">
+                            <label for="id_equipo" class="form-label">Guía</label>
+                            <select name="id_equipo" id="id_equipo" class="form-select" required>
                                 @foreach ($equipos as $equipo)
                                     <option value="{{ $equipo->id }}">{{ $equipo->nom_equipo }} </option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3">
-                                <label for="codigo_m" class="form-label">Codigo del equipo</label>
-                                <input type="text" name="codigo_m" id="codigo_m" class="form-control" required>
-                                 </div>
+                       
                         <div class="mb-3">
                             <label for="estado_e_id" class="form-label">Estado: </label>
                             <select name="estado_e_id" id="estado_e_id" class="form-select" required>
@@ -171,12 +173,69 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KF6o/kJF/b7ICQ1Zfs0cQ45oM0v4lL+SzR0t4i0p54K/xY8q3jOAV5tQ9l" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css"/>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script>
-function confirmDelete(id) {
-    if (confirm('¿Estás seguro de que deseas eliminar este material?')) {
-        document.querySelector(`form[action*="${id}"]`).submit();
-    }
+    function confirmDelete(id) {
+    Swal.fire({
+        title: 'Eliminar',
+        text: '¿Estás seguro de que deseas eliminar este material?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById(`delete-form-${id}`).submit();
+        }
+    });
 }
+    function RegistroExitoso() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Registro exitoso',
+            text: 'Tu registro ha sido exitoso',
+            timer: 1300,
+            showConfirmButton: false
+        });
+    }
+    function cambio() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Cambio generado',
+            text: ' ',
+            timer: 1400,
+            showConfirmButton: false
+        });
+    }
 </script>
+
+@if(session('register'))
+    <script>
+        RegistroExitoso();
+    </script>
+@endif
+@if(session('modify'))
+    <script>
+        cambio();
+    </script>
+@endif
+@if(session('destroy'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Eliminado',
+            text: 'El elemento ha sido eliminado exitosamente',
+            timer: 1200,
+            showConfirmButton: false
+        });
+    </script>
+@endif
 @endsection

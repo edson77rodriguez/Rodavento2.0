@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Rol;
 use App\Models\Guia; 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
@@ -17,7 +20,6 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
     }
 
     public function showLoginForm()
@@ -30,11 +32,20 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        // Verificar si el rol del usuario es "Guía" (ID = 3 o nombre del rol es "Guía")
+        // Verificar si el usuario está aprobado
+        if ($user->rol->nom_rol=='Administrador')
+        {
+            return redirect()->route('admin.dashboard');
+
+        }
+        if (!$user->is_approved) {
+            Auth::logout();
+            return redirect()->route('awaiting-approval');
+        }
+
+        // Verificar si el usuario es "Guía" y crear una entrada en la tabla `Guias` si no existe
         if ($user->rol && ($user->rol->id == 3 || $user->rol->nom_rol == 'Guía')) {
-            // Verificar si el usuario ya está en la tabla guias
             if (!Guia::where('user_id', $user->id)->exists()) {
-                // Crear una nueva entrada en la tabla guias
                 Guia::create([
                     'user_id' => $user->id,
                 ]);
@@ -47,7 +58,11 @@ class LoginController extends Controller
                 case 'Administrador':
                     return redirect()->route('admin.dashboard');
                 case 'Supervisor':
-                    return redirect()->route('supervisor.dashboard');
+                    return redirect()->route('admin.dashboard');
+                case 'Encargado':
+                    return redirect()->route('admin.dashboard');
+                case 'Guia':
+                    return redirect()->route('home');
                 default:
                     return redirect()->route('home');
             }
@@ -57,5 +72,3 @@ class LoginController extends Controller
         return redirect('/no-autorizado');
     }
 }
-
-

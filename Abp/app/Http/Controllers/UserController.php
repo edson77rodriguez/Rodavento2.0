@@ -45,4 +45,26 @@ class UserController extends Controller
         Permission::create(['name' => 'editar usuarios']);
         Permission::create(['name' => 'eliminar usuarios']);
     }
+
+    public function approve($id)
+    {
+        $user = User::findOrFail($id);
+        $user->is_approved = true; // Lógica para la aprobación
+        $user->save();
+    
+        return redirect()->route('admin.users.index2')->with('success', 'Usuario aprobado con éxito.');
+    }
+    
+    // En UserController
+public function index2()
+{
+    // Lógica para mostrar todos los usuarios
+    $users = User::all(); // o cualquier lógica necesaria
+    $roles = Rol::all(); // Obtener todos los roles disponibles
+
+    return view('admin.users.index2', compact('users','roles'));
+}
+    
+    
+
 }

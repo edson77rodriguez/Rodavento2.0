@@ -23,7 +23,7 @@ class MantenimientoController extends Controller
     // Guarda un nuevo mantenimiento
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'material_id' => 'required|exists:materials,id',
             'fecha_mantenimiento' => 'required|date',
             'tipo_m' => 'required|exists:t__mantenimientos,id',
@@ -31,13 +31,8 @@ class MantenimientoController extends Controller
             'encargado_id' => 'required|exists:encargados,id',
         ]);
 
-        Mantenimiento::create([
-            'material_id' => $request->material_id,
-            'fecha_mantenimiento' => $request->fecha_mantenimiento,
-            'tipo_m' => $request->tipo_m,
-            'observaciones' => $request->observaciones,
-            'encargado_id' => $request->encargado_id,
-        ]);
+        Mantenimiento::create($validatedData);
+
 
         return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento creado exitosamente');
     }
@@ -46,19 +41,15 @@ class MantenimientoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'material_id' => 'required|exists:materials,id',
             'fecha_mantenimiento' => 'required|date',
             'tipo_m' => 'required|exists:t__mantenimientos,id',
-            'observaciones' => 'required|string',
             'encargado_id' => 'required|exists:encargados,id',
         ]);
 
         $mantenimiento = Mantenimiento::findOrFail($id);
         $mantenimiento->update([
-            'material_id' => $request->material_id,
             'fecha_mantenimiento' => $request->fecha_mantenimiento,
             'tipo_m' => $request->tipo_m,
-            'observaciones' => $request->observaciones,
             'encargado_id' => $request->encargado_id,
         ]);
 
