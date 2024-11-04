@@ -97,6 +97,8 @@ Route::middleware(['auth'])->group(function () {
 
         'users' => UserController::class,
     ]);
+    Route::put('/guia/{guia}', [HomeController::class, 'updateDisponibilidad'])->name('guia.update');
+    Route::post('/update-disponibilidad', [HomeController::class, 'updateDisponibilidad'])->name('update.disponibilidad');
     // Roles and Permissions
     Route::get('/roles-permissions', [RolePermissionController::class, 'showAssignForm'])->name('assign.form');
     Route::post('/roles-permissions', [RolePermissionController::class, 'assignPermissions'])->name('assign.permissions');

@@ -16,7 +16,8 @@ class Asignar_actividadesController extends Controller
     public function index()
     {
         $asignaciones=Asignar_actividades::all();
-        $guias = Guia::all();
+        // Filtrar guías donde 'disponibilidad' es true (o el valor que uses para indicar que están disponibles)
+        $guias = Guia::where('disponibilidad', true)->get(); // Filtra los guías disponibles
         $supervisores = Supervisor::all();
         $encargados = Encargado::all();
         $actividades = Actividad::all();

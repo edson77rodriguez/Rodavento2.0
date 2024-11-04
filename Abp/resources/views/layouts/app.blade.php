@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,14 +14,13 @@
       <h1>Rodavento</h1>
       <nav>
         <ul class="list-unstyled d-flex mb-0">
-          <li class="me-4"><a href="{{ url('/') }}" class="text-dark">Inicio</a></li>
-          <li class="me-4"><a href="{{ url('/home') }}" class="text-dark">Regresar</a></li>
-
-    
-<li class="dropdown">
-    
-</li>
-          <li><a href="{{ url('/carrito') }}" class="text-dark">  Carrito</a></li>
+          
+          <li>
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+              @csrf
+              <button type="submit" class="btn btn-link text-dark">Cerrar sesión</button>
+            </form>
+          </li>
         </ul>
       </nav>
     </div>
