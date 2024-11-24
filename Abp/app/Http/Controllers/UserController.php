@@ -49,7 +49,7 @@ class UserController extends Controller
     public function approve($id)
     {
         $user = User::findOrFail($id);
-        $user->is_approved = true; // Lógica para la aprobación
+        $user->is_approved = true;
         $user->save();
     
         return redirect()->route('admin.users.index2')->with('success', 'Usuario aprobado con éxito.');

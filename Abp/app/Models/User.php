@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles; // Asegúrate de importar el trait
+use Spatie\Permission\Traits\HasRoles; 
 class User extends Authenticatable
 {
     use HasFactory, HasRoles; // Añade HasRoles aquí
@@ -40,5 +40,6 @@ public function rol()
 {
     return $this->belongsTo(Rol::class);
 }
+
 
 }

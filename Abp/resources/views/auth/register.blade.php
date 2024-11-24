@@ -1,11 +1,10 @@
-<!-- resources/views/auth/register.blade.php -->
 @extends('layouts.app')
 
 @section('content')
     <main>
         <div class="contenedor__todo">
             <div class="contenedor__login-register">
-                <!-- Register Form -->
+                <!-- Formulario de Registro -->
                 <form method="POST" action="{{ route('register') }}" class="formulario__register">
                     @csrf
                     <h2>Registro de Usuario</h2>
