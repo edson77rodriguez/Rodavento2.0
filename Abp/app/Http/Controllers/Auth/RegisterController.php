@@ -11,7 +11,7 @@ use App\Models\Direccion; // Importa el modelo Direccion
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Guia; 
+use App\Models\Guia;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -73,6 +73,7 @@ class RegisterController extends Controller
             'telefono' => 'required|string|max:191',
             'password' => 'required|string|min:8',
             'rol_id' => 'required|exists:rols,id',
+
         ]);
 
         // Llamar al procedimiento almacenado (si es necesario)

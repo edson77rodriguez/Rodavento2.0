@@ -36,7 +36,7 @@ Route::get('/', function () {
 // En routes/web.php, asegúrate de que el middleware se aplique correctamente si es necesario
 Route::middleware(['auth', 'check_if_approved'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    
+    Route::get('/alert');
 
 });
 Route::post('/users/{id}/approve', [UserController::class, 'approve'])->name('users.approve');
@@ -102,7 +102,7 @@ Route::middleware(['auth'])->group(function () {
     // Roles and Permissions
     Route::get('/roles-permissions', [RolePermissionController::class, 'showAssignForm'])->name('assign.form');
     Route::post('/roles-permissions', [RolePermissionController::class, 'assignPermissions'])->name('assign.permissions');
-    
+
     Route::middleware(['role:admin'])->group(function() {
         Route::resource('permissions', PermissionController::class);
     });

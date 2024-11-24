@@ -66,7 +66,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
       <li class="nav-item">
-     
+
 
       @if(Auth::user()->rol_id == 1) <!-- Suponiendo que ROL_ADMIN es una constante definida -->
     <a class="nav-link active" href="{{ route('admin.users.index2') }}">

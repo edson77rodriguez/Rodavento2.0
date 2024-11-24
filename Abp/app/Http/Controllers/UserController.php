@@ -51,10 +51,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->is_approved = true;
         $user->save();
-    
+
         return redirect()->route('admin.users.index2')->with('success', 'Usuario aprobado con éxito.');
     }
-    
+
     // En UserController
 public function index2()
 {
@@ -64,7 +64,7 @@ public function index2()
 
     return view('admin.users.index2', compact('users','roles'));
 }
-    
-    
+
+
 
 }
