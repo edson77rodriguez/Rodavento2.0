@@ -7,7 +7,7 @@ use App\Models\Direccion;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Rol;
-use App\Models\Guia; 
+use App\Models\Guia;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +29,7 @@ class LoginController extends Controller
 
         return view('auth.login', compact('direccions', 'roles')); // Pasar ambas variables a la vista
     }
+
 
     protected function authenticated(Request $request, $user)
     {

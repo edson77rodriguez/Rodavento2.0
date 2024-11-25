@@ -41,7 +41,7 @@
                                         Login or register
                                     </a>
 
-                                    
+
                                 @endauth
                             </nav>
                         @endif

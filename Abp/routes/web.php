@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\RolController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstadoController;
@@ -12,6 +13,8 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\T_MantenimientoController;
 use App\Http\Controllers\Estado_equipoController;
 use App\Http\Controllers\AreaController;
+use App\Models\Direccion;
+use App\Models\Rol;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\UserController;
@@ -29,10 +32,18 @@ use App\Http\Controllers\MantenimientoController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Asignar_EquipoController;
 
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register']);
+});
 
 Route::get('/', function () {
-    return view('welcome');
+    $direccions = Direccion::all(); // Cargar todas las direcciones
+    $roles = Rol::all(); // Cargar todos los roles
+
+    return view('layouts.app2', compact('direccions', 'roles')); // Pasar ambas variables a la vista
 });
+
 // En routes/web.php, asegúrate de que el middleware se aplique correctamente si es necesario
 Route::middleware(['auth', 'check_if_approved'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');

@@ -119,10 +119,11 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $roles = Rol::all(); // Obtiene todos los roles disponibles
-        $direccions = Direccion::all(); // Obtiene todas las direcciones disponibles
+        $direccion = Direccion::all(); // Obtiene todas las direcciones disponibles
 
-        return view('auth.register', compact('roles', 'direccions')); // Pasa los roles y direcciones a la vista
+        return redirect()->route('login');
     }
+
     public function register(Request $request)
 {
     // Validate the incoming request data
@@ -150,6 +151,6 @@ class RegisterController extends Controller
     ]);
 
     // Redirect to the users index page with a success message
-    return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.');
+    return redirect()->route('login')->with('success', 'Usuario creado correctamente.');
 }
 }
