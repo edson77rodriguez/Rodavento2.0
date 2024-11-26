@@ -80,7 +80,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="id{{ $equipo->id_equipo }}" class="form-label">Categoría</label>
-                                            <select name="id" id="id{{ $equipo->id_equipo }}" class="form-control" required>
+                                            <select name="categoria_id" id="categoria_id{{ $equipo->id_equipo }}" class="form-control" required>
                                                 @foreach($categorias as $categoria)
                                                     <option value="{{ $categoria->id }}" {{ $equipo->id == $categoria->id ? 'selected' : '' }}>
                                                         {{ $categoria->desc_cat }}

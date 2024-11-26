@@ -41,7 +41,7 @@ class T_MantenimientoController extends Controller
     {
         $validatedData = $request->validate([
             'nom_tipo' => 'required',
-            'desc_t'=>'required',
+            'desc_m'=>'required',
         ]);
         $t_mantenimiento = T_Mantenimiento::find($id);
         $t_mantenimiento->update($request->all());

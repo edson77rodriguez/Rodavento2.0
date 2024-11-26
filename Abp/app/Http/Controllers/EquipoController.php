@@ -50,9 +50,10 @@ class EquipoController extends Controller
             'descripcion' => 'nullable|string',
             'cantidad' => 'required|integer|min:0',
         ]);
-
+        
         $equipo = Equipo::findOrFail($id);
         $equipo->update($validatedData);
+        
         return redirect()->route('equipos.index')->with('modify',' ');
     }
 

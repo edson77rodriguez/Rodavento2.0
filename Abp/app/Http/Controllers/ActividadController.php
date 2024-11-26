@@ -15,7 +15,7 @@ class ActividadController extends Controller
         $duraciones = Duracion::all(); // Para el formulario de creación y edición
         return view('actividades.index', compact('actividades', 'duraciones'));
     }
-
+    
     public function store(Request $request)
     {
         $request->validate([
