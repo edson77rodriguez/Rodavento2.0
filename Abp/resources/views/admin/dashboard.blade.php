@@ -18,14 +18,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/assets/img/apple-icon.png') }}">
-  <link rel="icon" type="image/png" href="{{ asset('/assets/img/favicon.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('img/roda.jpg') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <title>
-    TeamLearn
+    Rodavento
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0-beta2/css/bootstrap.min.css">
@@ -282,13 +282,19 @@
         <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="{{ route('homeencargado') }}">Home</a>
     </li>
     @endif
-  
+    <li class="nav-item d-flex align-items-center">
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-danger btn-sm mb-0 me-3">
+        Volver
+    </a>
+</li>
+
     <li class="nav-item d-flex align-items-center">
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
             @csrf
             <button type="submit" class="btn btn-outline-danger btn-sm mb-0 me-3">Cerrar sesión</button>
         </form>
     </li>
+    
 </ul>
 </div>
 </div>
