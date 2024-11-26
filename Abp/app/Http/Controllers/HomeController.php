@@ -6,6 +6,7 @@ use App\Models\Rol;
 use Illuminate\Http\Request;
 use App\Models\Inventario;
 use App\Models\Producto;
+use App\Models\Asignar_Equipo;
 use App\Models\User;
 use App\Models\Guia;
 
@@ -31,9 +32,11 @@ class HomeController extends Controller
 
         // Obtén las actividades asignadas al guía, sólo si está disponible
         $actividades = $disponible ? $guia->asignarActividades : collect(); // Si no está disponible, devuelve una colección vacía
+        $asignaciones = Asignar_Equipo::with(['actividad', 'material.equipo'])->get();
+
 
         // Pasa los datos a la vista
-        return view('home', compact('user', 'guia', 'actividades'));
+        return view('home', compact('user', 'guia', 'actividades','asignaciones'));
     }
 
 
@@ -58,7 +61,6 @@ class HomeController extends Controller
 
         return redirect()->back()->with('success', 'Disponibilidad actualizada con éxito.');
     }
-
 
 
 

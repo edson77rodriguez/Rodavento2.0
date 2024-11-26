@@ -50,6 +50,8 @@ Route::middleware(['auth', 'check_if_approved'])->group(function () {
     Route::get('/alert');
 
 });
+Route::get('/asignaciones', [AsignarEquipoController::class, 'index'])->name('asignaciones.index');
+
 Route::post('/users/{id}/approve', [UserController::class, 'approve'])->name('users.approve');
 Route::post('/admin/users/{id}', [UserController::class, 'update'])->name('users.update');
 Route::patch('/users/{id}/approve', [UserController::class, 'approve'])->name('users.approve');

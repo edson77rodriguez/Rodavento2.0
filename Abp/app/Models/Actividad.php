@@ -18,4 +18,5 @@ class Actividad extends Model
     {
         return $this->belongsTo(Duracion::class);
     }
+
 }

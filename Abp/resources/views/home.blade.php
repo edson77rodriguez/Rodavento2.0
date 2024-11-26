@@ -154,8 +154,8 @@
         </button>
     </div>
     <div class="welcome">
-    <h1>Bienvenido, <span class="text-primary">Lucía Tola Miranda</span>!</h1>
-    <p>Este es tu panel como guía. Aquí puedes gestionar tus actividades y actualizar tu perfil.</p>
+        <h1>Bienvenido, <span class="text-primary">{{ Auth::user()->nom}} {{ Auth::user()->ap }} {{ Auth::user()->am }}</span>!</h1>
+        <p>Este es tu panel como guía. Aquí puedes gestionar tus actividades y actualizar tu perfil.</p>
     </div>
     <!-- Actividades Section -->
     <div class="container my-5">
@@ -178,17 +178,31 @@
             @endif
         </div>
 
-        <!-- Perfil Section -->
-        <h2 class="mt-5 mb-4 text-center">Actualizar Perfil</h2>
-        <form action="{{ route('update.disponibilidad') }}" method="POST">
-            @csrf
-            <label for="disponibilidad" class="form-label">¿Disponible?</label>
-            <select name="disponibilidad" id="disponibilidad" class="form-select w-50 mb-3">
-                <option value="true" {{ $guia && $guia->disponibilidad ? 'selected' : '' }}>Sí</option>
-                <option value="false" {{ $guia && !$guia->disponibilidad ? 'selected' : '' }}>No</option>
-            </select>
-            <button type="submit" class="btn btn-success">Actualizar Disponibilidad</button>
-        </form>
+
+        <!-- Asignaciones Section -->
+    <div class="container my-5">
+        <h2 class="mb-4 text-center">Asignaciones de Materiales</h2>
+        <div class="row">
+            @if($asignaciones->isEmpty())
+                <div class="alert alert-info text-center">
+                    <p>No hay asignaciones de materiales disponibles.</p>
+                </div>
+            @else
+                @foreach($asignaciones as $asignacion)
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Actividad: {{ $asignacion->actividad->nom_act }}</h5>
+                                <p><strong>Material:</strong> {{ $asignacion->material->codigo_m }}</p>
+                                <p><strong>Equipo:</strong> {{ $asignacion->material->equipo->nom_equipo ?? 'No especificado' }}</p>
+                                <p><strong>Fecha Programada:</strong> {{ $asignacion->fecha_programada }}</p>
+                                <p><strong>Fecha Devolución:</strong> {{ $asignacion->fecha_devolucion ?? 'Pendiente' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
     </div>
 </main>
 
@@ -206,7 +220,7 @@
     </div>
     <p class="mt-2">
         <a href="#">Aviso de privacidad</a> ·
-        <a href="#">Políticas COVID</a>
+        <a href="#">Políticas de Desarollo</a>
     </p>
     <small>© Desarrollado por Equipo Edson · Ariana · Oscar</small>
 </footer>

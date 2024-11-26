@@ -16,7 +16,7 @@ class Material extends Model
         'fecha_asignacion',
         'fecha_mantenimiento',
     ];
-    
+
     public function equipo()
     {
         return $this->belongsTo(Equipo::class, 'id_equipo');
