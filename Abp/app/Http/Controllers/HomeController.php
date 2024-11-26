@@ -8,7 +8,10 @@ use App\Models\Inventario;
 use App\Models\Producto;
 use App\Models\Asignar_Equipo;
 use App\Models\User;
+use App\Models\Encargado;
 use App\Models\Guia;
+use App\Models\Mantenimiento;
+
 
 class HomeController extends Controller
 {
@@ -39,6 +42,41 @@ class HomeController extends Controller
         return view('home', compact('user', 'guia', 'actividades','asignaciones'));
     }
 
+    public function indexencargado()
+{
+    // Obtén el usuario autenticado
+    $user = auth()->user();
+
+    // Obtén el encargado asociado al usuario
+    $encargado = Encargado::where('user_id', $user->id)->first();
+
+    // Si no hay encargado, regresa una vista vacía o con mensaje de error
+    if (!$encargado) {
+        return view('home', [
+            'user' => $user,
+            'encargado' => null,
+            'actividades' => collect(),
+            'asignaciones' => collect(),
+            'mantenimientos' => collect(),
+        ]);
+    }
+
+    // Verifica si el encargado tiene actividades asignadas
+    $actividades = $encargado->asignarActividades ?? collect();
+
+    // Obtén las asignaciones con relaciones cargadas
+    $asignaciones = Asignar_Equipo::with(['actividad', 'material.equipo'])->get();
+
+    // Obtén los mantenimientos realizados por el encargado
+    $mantenimientos = Mantenimiento::with(['material', 'tipoMantenimiento'])
+        ->where('encargado_id', $encargado->id)
+        ->get();
+
+    // Pasa los datos a la vista
+    return view('encargados.home', compact('user', 'encargado', 'actividades', 'asignaciones', 'mantenimientos'));
+}
+
+    
 
     public function updateDisponibilidad(Request $request)
     {

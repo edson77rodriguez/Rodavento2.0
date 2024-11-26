@@ -69,6 +69,8 @@ Route::get('/awaiting-approval', function () {
 Route::middleware(['auth'])->group(function () {
     // Dashboard Routes
     Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('homeencargado', [HomeController::class, 'indexencargado'])->name('homeencargado');
+
     Route::get('/assign-user-roles', [UserRoleController::class, 'assignRoles']);
 
     // CRUD Menu Routes

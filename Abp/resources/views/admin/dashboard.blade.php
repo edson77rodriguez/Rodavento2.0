@@ -279,9 +279,10 @@
     @if(Auth::user()->rol_id == 4 || Auth::user()->rol->nom_rol == 'Encargado')
 
     <li class="nav-item d-flex align-items-center">
-        <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="{{ route('home') }}">Home</a>
+        <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="{{ route('homeencargado') }}">Home</a>
     </li>
     @endif
+  
     <li class="nav-item d-flex align-items-center">
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
             @csrf
