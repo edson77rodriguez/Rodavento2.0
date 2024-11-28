@@ -17,7 +17,16 @@
             </div>
         </div>
     </div>
-
+        <!-- Validación de errores -->
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <table class="table">
         <thead>
             <tr>
@@ -49,7 +58,7 @@
                         </form>
                     </td>
                 </tr>
-
+                
                 <!-- Modal Ver Asignación -->
                 <div class="modal fade" id="viewAsignacionModal{{ $asignacion->id }}" tabindex="-1" aria-labelledby="viewAsignacionModalLabel{{ $asignacion->id }}" aria-hidden="true">
                     <div class="modal-dialog">
@@ -194,6 +203,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar Asignación</button>
                     </form>
+                    
                 </div>
             </div>
         </div>

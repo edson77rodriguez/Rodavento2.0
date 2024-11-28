@@ -9,6 +9,7 @@ use App\Models\Encargado;
 use App\Models\Actividad;
 use App\Models\Estado_actividad;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class Asignar_actividadesController extends Controller
 {
@@ -37,17 +38,36 @@ class Asignar_actividadesController extends Controller
             'fecha_asignada' => 'required|date',
             'estado_a_id' => 'required|exists:estado_actividads,id',
         ]);
-
-        Asignar_actividades::create([
-            'guia_id' => $request->guia_id,
-            'supervisor_id' => $request->supervisor_id,
-            'encargado_id' => $request->encargado_id,
-            'actividad_id' => $request->actividad_id,
-            'fecha_asignada' => $request->fecha_asignada,
-            'estado_a_id' => $request->estado_a_id,
-        ]);
-
-        return redirect()->route('asignar_actividades.index')->with('success', 'Asignación creada exitosamente');
+    
+        try {
+            Asignar_actividades::create([
+                'guia_id' => $request->guia_id,
+                'supervisor_id' => $request->supervisor_id,
+                'encargado_id' => $request->encargado_id,
+                'actividad_id' => $request->actividad_id,
+                'fecha_asignada' => $request->fecha_asignada,
+                'estado_a_id' => $request->estado_a_id,
+            ]);
+    
+            return redirect()
+                ->route('asignar_actividades.index')
+                ->with('success', 'Actividad asignada correctamente.');
+    
+        } catch (QueryException $e) {
+            // Verificar si el error proviene del trigger
+            if ($e->getCode() === '45000') {
+                return redirect()
+                    ->back()
+                    ->withErrors(['error' => 'El guía ya tiene una actividad asignada en esta fecha.'])
+                    ->withInput();
+            }
+    
+            // Manejar otros errores de base de datos
+            return redirect()
+                ->back()
+                ->withErrors(['error' => 'Ocurrió un error inesperado. Inténtalo de nuevo.'])
+                ->withInput();
+        }
     }
 
    
