@@ -7,6 +7,8 @@ use App\Models\Material;
 use App\Models\T_Mantenimiento;
 use App\Models\Encargado;
 use Illuminate\Http\Request;
+use App\Models\User;
+
 class MantenimientoController extends Controller
 {
     // Muestra la lista de mantenimientos
@@ -16,8 +18,9 @@ class MantenimientoController extends Controller
         $materiales = Material::all();
         $tipos = T_Mantenimiento::all();
         $encargados = Encargado::all();
+        $user = auth()->user();
 
-        return view('mantenimientos.index', compact('mantenimientos', 'materiales', 'tipos', 'encargados'));
+        return view('mantenimientos.index', compact('mantenimientos', 'materiales', 'tipos', 'encargados','user'));
     }
 
     // Guarda un nuevo mantenimiento

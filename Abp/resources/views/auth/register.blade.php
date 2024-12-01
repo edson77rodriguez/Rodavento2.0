@@ -5,7 +5,7 @@
         <div class="contenedor__todo">
             <div class="contenedor__login-register">
                 <!-- Formulario de Registro -->
-                <form method="POST" action="{{ route('register') }}" class="formulario__register">
+                <form method="POST" action="{{ route('register') }}" class="formulario__register" id="registroForm">
                     @csrf
                     <h2>Registro de Usuario</h2>
 
@@ -72,3 +72,9 @@
 
     <script src="{{ asset('assets/js/script.js') }}"></script>
 @endsection
+<script>
+    document.getElementById('registroForm').addEventListener('submit', function() {
+        // Limpiar todos los campos del formulario después de submit
+        document.getElementById('registroForm').reset();
+    });
+</script>

@@ -50,11 +50,15 @@
                     <td>{{ $asignacion->estadoActividad->desc_estado_a }}</td>
                     <td>
                         <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewAsignacionModal{{ $asignacion->id }}">Ver</button>
+                        @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador' ||  Auth::user()->rol->nom_rol == 'Supervisor')
                         <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editAsignacionModal{{ $asignacion->id }}">Editar</button>
+                        @endif
                         <form action="{{ route('asignar_actividades.destroy', $asignacion->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
+                            @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                             <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $asignacion->id }}')">Eliminar</button>
+                            @endif
                         </form>
                     </td>
                 </tr>
@@ -68,7 +72,9 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                            @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                 <p><strong>ID:</strong> {{ $asignacion->id }}</p>
+                                @endif
                                 <p><strong>Guía:</strong> {{ $asignacion->guia->user->nom }} {{ $asignacion->guia->user->ap }} {{ $asignacion->guia->user->am }}</p>
                                 <p><strong>Supervisor:</strong> {{ $asignacion->supervisor->user->nom }} {{ $asignacion->supervisor->user->ap }} {{ $asignacion->supervisor->user->am }}</p>
                                 <p><strong>Encargado:</strong> {{ $asignacion->encargado->user->nom }} {{ $asignacion->encargado->user->ap }} {{ $asignacion->encargado->user->am }}</p>
@@ -92,6 +98,7 @@
                                 <form method="POST" action="{{ route('asignar_actividades.update', $asignacion->id) }}">
                                     @csrf
                                     @method('PUT')
+                                    
                                     <div class="mb-3">
                                         <label for="guia_id" class="form-label">Guía</label>
                                         <select name="guia_id" id="guia_id" class="form-select" required>
@@ -100,6 +107,8 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
+
                                     <div class="mb-3">
                                         <label for="supervisor_id" class="form-label">Supervisor</label>
                                         <select name="supervisor_id" id="supervisor_id" class="form-select" required>
@@ -116,6 +125,7 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @endif
                                     <div class="mb-3">
                                         <label for="actividad_id" class="form-label">Actividad</label>
                                         <select name="actividad_id" id="actividad_id" class="form-select" required>
@@ -160,6 +170,7 @@
                         <div class="mb-3">
                             <label for="guia_id" class="form-label">Guía</label>
                             <select name="guia_id" id="guia_id" class="form-select" required>
+                                <option>Selecciona un guia</option>
                                 @foreach ($guias as $guia)
                                     <option value="{{ $guia->id }}">{{ $guia->user->nom }} {{ $guia->user->ap }} {{ $guia->user->am }}</option>
                                 @endforeach
@@ -168,6 +179,7 @@
                         <div class="mb-3">
                             <label for="supervisor_id" class="form-label">Supervisor</label>
                             <select name="supervisor_id" id="supervisor_id" class="form-select" required>
+                                <option>Selecciona un supervisor</option>
                                 @foreach ($supervisores as $supervisor)
                                     <option value="{{ $supervisor->id }}">{{ $supervisor->user->nom }} {{ $supervisor->user->ap }} {{ $supervisor->user->am }}</option>
                                 @endforeach
@@ -176,6 +188,7 @@
                         <div class="mb-3">
                             <label for="encargado_id" class="form-label">Encargado</label>
                             <select name="encargado_id" id="encargado_id" class="form-select" required>
+                            <option>Selecciona un encargado</option>
                                 @foreach ($encargados as $encargado)
                                     <option value="{{ $encargado->id }}">{{ $encargado->user->nom }} {{ $encargado->user->ap }} {{ $encargado->user->am }}</option>
                                 @endforeach
@@ -184,6 +197,7 @@
                         <div class="mb-3">
                             <label for="actividad_id" class="form-label">Actividad</label>
                             <select name="actividad_id" id="actividad_id" class="form-select" required>
+                            <option>Selecciona una actividad</option>
                                 @foreach ($actividades as $actividad)
                                     <option value="{{ $actividad->id }}">{{ $actividad->nom_act }}</option>
                                 @endforeach
@@ -196,6 +210,7 @@
                         <div class="mb-3">
                             <label for="estado_a_id" class="form-label">Estado</label>
                             <select name="estado_a_id" id="estado_a_id" class="form-select" required>
+                            <option>Selecciona un estado de la actividad</option>
                                 @foreach ($estados as $estado)
                                     <option value="{{ $estado->id }}">{{ $estado->desc_estado_a }}</option>
                                 @endforeach

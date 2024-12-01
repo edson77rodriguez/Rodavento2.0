@@ -37,11 +37,15 @@
                     <td>{{ $mantenimiento->tipoMantenimiento->nom_tipo }}</td>
                     <td>
                         <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewMantenimientoModal{{ $mantenimiento->id }}">Ver</button>
+                        @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador' ||  Auth::user()->rol->nom_rol == 'Supervisor')
                         <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editMantenimientoModal{{ $mantenimiento->id }}">Editar</button>
+                        @endif
                         <form action="{{ route('mantenimientos.destroy', $mantenimiento->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
+                            @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                             <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $mantenimiento->id }}')">Eliminar</button>
+                            @endif
                         </form>
                     </td>
                 </tr>
@@ -55,7 +59,9 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                            @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                 <p><strong>ID:</strong> {{ $mantenimiento->id }}</p>
+                                @endif
                                 <p><strong>Equipo:</strong> {{ $mantenimiento->material->equipo->nom_equipo }}</p>
                                 <p><strong>Encargado:</strong> {{ $mantenimiento->encargado->user->nom }} {{ $mantenimiento->encargado->user->ap }}</p>
                                 <p><strong>Fecha Programada:</strong> {{ $mantenimiento->fecha_programada }}</p>
@@ -85,6 +91,7 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                     <div class="mb-3">
                                         <label for="encargado_id" class="form-label">Encargado</label>
                                         <select name="encargado_id" id="encargado_id" class="form-select" required>
@@ -93,11 +100,14 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @endif
+                                    @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
+
                                     <div class="mb-3">
                                         <label for="fecha_mantenimiento" class="form-label">Fecha Programada</label>
                                         <input type="date" name="fecha_mantenimiento" id="fecha_mantenimiento" value="{{ $mantenimiento->fecha_mantenimiento }}" class="form-control" required>
                                     </div>
-                                   
+                                    @endif
                                     <button type="submit" class="btn btn-primary">Actualizar</button>
                                 </form>
                             </div>
@@ -122,6 +132,7 @@
                         <div class="mb-3">
                             <label for="material_id" class="form-label">Material</label>
                             <select name="material_id" id="material_id" class="form-select" required>
+                                <option>Selecciona un material</option>
                                 @foreach ($materiales as $material)
                                     <option value="{{ $material->id }}">{{ $material->equipo->nom_equipo }}</option>
                                 @endforeach
@@ -130,6 +141,7 @@
                         <div class="mb-3">
                             <label for="encargado_id" class="form-label">Encargado</label>
                             <select name="encargado_id" id="encargado_id" class="form-select" required>
+                                <option>Selecciona un Encargado</option>
                                 @foreach ($encargados as $encargado)
                                     <option value="{{ $encargado->id }}">{{ $encargado->user->nom }} {{ $encargado->user->ap }}</option>
                                 @endforeach
@@ -139,6 +151,7 @@
                         <div class="mb-3">
                             <label for="tipo_m" class="form-label">Tipo mantenimiento</label>
                             <select name="tipo_m" id="tipo_m" class="form-select" required>
+                                <option>Selecciona el tipo de mantenimiento</option>
                                 @foreach ($tipos as $tipo)
                                     <option value="{{ $tipo->id }}">{{ $tipo->nom_tipo }}</option>
                                 @endforeach

@@ -32,13 +32,14 @@
                             <form id="delete-form-{{ $t_mantenimiento->id }}" action="{{ route('t_mantenimientos.destroy', $t_mantenimiento->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
+                                    @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                     <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $t_mantenimiento->id }}')">Eliminar</button>
+                                    @endif
                                 </form>
                         </div>
                     </div>
                 </div>
             </div>
-
                 <!-- Modal Ver Direccion -->
                 <div class="modal fade" id="viewT_MantenimientoModal{{ $t_mantenimiento->id }}" tabindex="-1" aria-labelledby="viewT_MantenimientoModalLabel{{ $t_mantenimiento->id }}" aria-hidden="true">
                     <div class="modal-dialog">

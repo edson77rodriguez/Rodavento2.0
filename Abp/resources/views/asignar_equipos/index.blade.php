@@ -17,6 +17,16 @@
             </div>
         </div>
     </div>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 
     <table class="table">
         <thead>
@@ -33,19 +43,25 @@
             @foreach ($asignaciones as $asignacion)
                 <tr>
                     <td>{{ $asignacion->material->equipo->nom_equipo }}  </td>
-                    <td>{{ $asignacion->guia->user->nom }} {{ $asignacion->guia->user->ap }}  </td>
-                    <td>{{ $asignacion->actividad->nom_act }}  </td>
+                    <td>{{ $asignacion->guia->user->nom }} {{ $asignacion->guia->user->ap }} {{ $asignacion->guia->user->am }}</td>
+                    <td>{{ $asignacion->actividad->nom_act }}</td>
                     <td>{{ $asignacion->fecha_programada }}</td>
                     <td>{{ $asignacion->fecha_devolucion }}</td>
                     
                     <td>
                         <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewAsignacionModal{{ $asignacion->id }}">Ver</button>
+                        @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador' ||  Auth::user()->rol->nom_rol == 'Supervisor')
                         <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editAsignacionModal{{ $asignacion->id }}">Editar</button>
+                        @endif
                         <form action="{{ route('asignar_equipos.destroy', $asignacion->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $asignacion->id }}')">Eliminar</button>
-                        </form>
+                        @csrf
+                        @method('DELETE')
+                        @if(Auth::user()->rol_id == 1 || Auth::user()->rol->nom_rol == 'Administrador')
+                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                        @endif
+                    </form>
+
+
                     </td>
                 </tr>
 
@@ -58,7 +74,9 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                            @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                 <p><strong>ID:</strong> {{ $asignacion->id }}</p>
+                                @endif
                                 <p><strong>Material:</strong> {{ $asignacion->material->equipo->nom_equipo }} </p>
                                 <p><strong>Guia:</strong> {{ $asignacion->guia->user->nom }} {{ $asignacion->guia->user->ap }} {{ $asignacion->guia->user->am }}</p>
                                 <p><strong>Actividad:</strong> {{ $asignacion->actividad->nom_act }}</p>
@@ -83,7 +101,7 @@
                                     @method('PUT')
 
                                     <div class="mb-3">
-                                        <label for="material_id" class="form-label">Guía</label>
+                                        <label for="material_id" class="form-label">Material</label>
                                         <select name="material_id" id="material_id" class="form-select" required>
                                             @foreach ($materiales as $material)
                                                 <option value="{{ $material->id }}" {{ $asignacion->material_id == $material->id ? 'selected' : '' }}>{{ $asignacion->material->equipo->nom_equipo }}</option>
@@ -109,6 +127,8 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
+
                                     <div class="mb-3">
                                         <label for="fecha_programada" class="form-label">Fecha programada</label>
                                         <input type="date" name="fecha_programada" id="fecha_programada" value="{{ $asignacion->fecha_programada }}" class="form-control" required>
@@ -118,7 +138,7 @@
                                         <label for="fecha_devolucion" class="form-label">Fecha Devolucion</label>
                                         <input type="date" name="fecha_devolucion" id="fecha_devolucion" value="{{ $asignacion->fecha_devolucion }}" class="form-control" required>
                                     </div>
-                                   
+                                   @endif
                                     <button type="submit" class="btn btn-primary">Actualizar</button>
                                 </form>
                             </div>
@@ -143,6 +163,7 @@
                         <div class="mb-3">
                             <label for="material_id" class="form-label">Material</label>
                             <select name="material_id" id="material_id" class="form-select" required>
+                                <option>Selecciona un material</option>
                                 @foreach ($materiales as $material)
                                     <option value="{{ $material->id }}">{{ $material->equipo->nom_equipo }}</option>
                                 @endforeach
@@ -151,15 +172,17 @@
                         <div class="mb-3">
                             <label for="guia_id" class="form-label">Guía</label>
                             <select name="guia_id" id="guia_id" class="form-select" required>
+                                <option>Selecciona un guia</option>
                                 @foreach ($guias as $guia)
                                     <option value="{{ $guia->id }}">{{ $guia->user->nom }} {{ $guia->user->ap }} {{ $guia->user->am }}</option>
                                 @endforeach
                             </select>
                         </div>
-                     
+
                         <div class="mb-3">
                             <label for="actividad_id" class="form-label">Actividad</label>
                             <select name="actividad_id" id="actividad_id" class="form-select" required>
+                                <option>Selecciona una actividad</option>
                                 @foreach ($actividades as $actividad)
                                     <option value="{{ $actividad->id }}">{{ $actividad->nom_act }}</option>
                                 @endforeach

@@ -24,7 +24,10 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <h5 class="card-title text-center">{{ $equipo->nom_equipo }}</h5>
+                                @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
+
                                 <p class="card-text"><strong>ID:</strong> {{ $equipo->id_equipo }}</p>
+                                @endif
                                 <p class="card-text"><strong>Categoría:</strong> {{ $equipo->categoria->desc_cat ?? 'N/A' }}</p>
                                 <p class="card-text"><strong>Cantidad:</strong> {{ $equipo->cantidad }}</p>
                                 <p class="card-text"><strong>Descripcion:</strong> {{ $equipo->descripcion }}</p>
@@ -32,11 +35,16 @@
 
                                 <div class="d-flex justify-content-between">
                                     <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewEquipoModal{{ $equipo->id_equipo }}">Ver</button>
-                                    <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editEquipoModal{{ $equipo->id_equipo }}">Editar</button>
-                                    <form id="delete-form-{{ $equipo->id }}" action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display: inline;">
+                                    @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador' ||  Auth::user()->rol->nom_rol == 'Supervisor')
+ 
+                                   <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editEquipoModal{{ $equipo->id_equipo }}">Editar</button>
+                                    @endif
+                                   <form id="delete-form-{{ $equipo->id }}" action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
+                                    @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                     <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $equipo->id }}')">Eliminar</button>
+                                    @endif
                                 </form>
                                 </div>
                             </div>
@@ -52,7 +60,10 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
+                                @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
+
                                     <p><strong>ID:</strong> {{ $equipo->id_equipo }}</p>
+                                    @endif
                                     <p><strong>Nombre:</strong> {{ $equipo->nom_equipo }}</p>
                                     <p><strong>Descripción:</strong> {{ $equipo->descripcion }}</p>
                                     <p><strong>Categoría:</strong> {{ $equipo->categoria->desc_cat ?? 'N/A' }}</p>

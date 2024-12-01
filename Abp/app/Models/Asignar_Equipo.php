@@ -17,8 +17,10 @@ class Asignar_Equipo extends Model
 
     public function guia()
     {
-        return $this->belongsTo(Guia::class);
+        return $this->belongsTo(Guia::class, 'guia_id');
     }
+    
+    
     public function actividad()
     {
         return $this->belongsTo(Actividad::class);

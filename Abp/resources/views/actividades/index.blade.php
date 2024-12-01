@@ -3,7 +3,6 @@
 @section('template_title')
     Actividades
 @endsection
-
 @section('crud_content')
 <div class="container py-5">
     <h1 class="text-center">Actividades Registradas</h1>
@@ -33,11 +32,15 @@
                     <td>{{ $actividad->duracion->desc_duracion ?? 'N/A' }}</td>
                     <td>
                         <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewActividadModal{{ $actividad->id }}">Ver</button>
+                        @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador' ||  Auth::user()->rol->nom_rol == 'Supervisor')
                         <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editActividadModal{{ $actividad->id }}">Editar</button>
+                        @endif
                         <form action="{{ route('actividades.destroy', $actividad->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
+                            @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                             <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $actividad->id }}')">Eliminar</button>
+                            @endif
                         </form>
                     </td>
                 </tr>
@@ -51,7 +54,9 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                            @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                 <p><strong>ID:</strong> {{ $actividad->id }}</p>
+                                @endif
                                 <p><strong>Nombre:</strong> {{ $actividad->nom_act }}</p>
                                 <p><strong>Duración:</strong> {{ $actividad->duracion->desc_duracion ?? 'N/A' }}</p>
                             </div>
@@ -78,6 +83,7 @@
                                     <div class="mb-3">
                                         <label for="duracion_id{{ $actividad->id }}" class="form-label">Duración</label>
                                         <select name="duracion_id" id="duracion_id{{ $actividad->id }}" class="form-select" required>
+                                            <option>Selecciona la duracion</option>
                                             @foreach ($duraciones as $duracion)
                                                 <option value="{{ $duracion->id }}" {{ $actividad->duracion_id == $duracion->id ? 'selected' : '' }}>{{ $duracion->desc_duracion }}</option>
                                             @endforeach

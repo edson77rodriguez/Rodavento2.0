@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Equipo;
 use App\Models\Categoria; 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class EquipoController extends Controller
 {
@@ -12,7 +13,8 @@ class EquipoController extends Controller
     {
         $equipos = Equipo::all(); 
         $categorias = Categoria::all(); 
-        return view('admin.cruds.equipos.index', compact('equipos', 'categorias'));
+        $user = auth()->user();
+        return view('admin.cruds.equipos.index', compact('equipos', 'categorias','user'));
     }
 
     public function store(Request $request)

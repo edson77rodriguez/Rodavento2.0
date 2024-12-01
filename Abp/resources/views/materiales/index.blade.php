@@ -39,11 +39,15 @@
                     <td>{{ $material->fecha_mantenimiento }}</td>
                     <td>
                         <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewAsignacionModal{{ $material->id }}">Ver</button>
+                        @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador' ||  Auth::user()->rol->nom_rol == 'Supervisor')
                         <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editAsignacionModal{{ $material->id }}">Editar</button>
+                        @endif
                         <form id="delete-form-{{ $material->id }}" action="{{ route('materiales.destroy', $material->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
+                                    @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                     <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $material->id }}')">Eliminar</button>
+                                    @endif
                                 </form>
                     </td>
                 </tr>
@@ -57,7 +61,9 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                            @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador' ||  Auth::user()->rol->nom_rol == 'Supervisor')
                                 <p><strong>ID:</strong> {{ $material->id }}</p>
+                                @endif
                                 <p><strong>Equipo:</strong> {{ $material->equipo->nom_equipo }}</p>
                                 <p><strong>Codigo del Equipo:</strong> {{ $material->codigo_m }}</p>
                                 <p><strong>Estado:</strong> {{ $material->estadoequipo->desc_estado_e }}</p>
@@ -88,14 +94,16 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                     <div class="mb-3">
                                             <label for="codigo_m{{ $material->id }}" class="form-label">Nombre del Equipo</label>
                                             <input type="text" name="codigo_m" id="codigo_m{{ $material->id }}" value="{{ old('codigo_m', $material->codigo_m) }}" class="form-control" required>
                                         </div>
-
+                                    @endif
                                     <div class="mb-3">
-                                        <label for="estado_e_id" class="form-label">Supervisor</label>
+                                        <label for="estado_e_id" class="form-label">Estado del equipo</label>
                                         <select name="estado_e_id" id="estado_e_id" class="form-select" required>
+                                            
                                             @foreach ($estados as $estado)
                                                 <option value="{{ $estado->id }}" {{ $material->estado_e_id == $estado->id ? 'selected' : '' }}>{{ $estado->desc_estado_e }} </option>
                                             @endforeach
@@ -139,9 +147,10 @@
                                  </div>
 
                         <div class="mb-3">
-                            <label for="id_equipo" class="form-label">Guía</label>
+                            <label for="id_equipo" class="form-label">Equipo</label>
                             <select name="id_equipo" id="id_equipo" class="form-select" required>
-                                @foreach ($equipos as $equipo)
+                            <option>Selecciona un equipo</option>    
+                            @foreach ($equipos as $equipo)
                                     <option value="{{ $equipo->id }}">{{ $equipo->nom_equipo }} </option>
                                 @endforeach
                             </select>
@@ -150,7 +159,8 @@
                         <div class="mb-3">
                             <label for="estado_e_id" class="form-label">Estado: </label>
                             <select name="estado_e_id" id="estado_e_id" class="form-select" required>
-                                @foreach ($estados as $estado)
+                            <option>Selecciona un estado de equipo</option>
+                            @foreach ($estados as $estado)
                                     <option value="{{ $estado->id }}">{{ $estado->desc_estado_e }}</option>
                                 @endforeach
                             </select>

@@ -121,7 +121,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:admin'])->group(function() {
         Route::resource('permissions', PermissionController::class);
     });
-
+    
     // Admin and Supervisor Dashboards
     Route::get('/admin', function () {
         return view('admin.dashboard');

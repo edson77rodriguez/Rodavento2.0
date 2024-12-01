@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Equipo;
 use App\Models\Estado_equipo;
 use App\Models\Material;
+use App\Models\User;
 
 class MaterialController extends Controller
 {
@@ -16,8 +17,8 @@ class MaterialController extends Controller
         $equipos = Equipo::all();
         $estados = Estado_equipo::all();
         $materiales = Material::with(['estadoEquipo', 'equipo'])->get();
-
-        return view('materiales.index', compact('materiales', 'equipos', 'estados'));
+        $user = auth()->user();
+        return view('materiales.index', compact('materiales', 'equipos', 'estados','user'));
     }
     // Guarda una nueva asignación
     public function store(Request $request)

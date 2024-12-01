@@ -3,7 +3,6 @@
 @section('template_title')
     Estado Equipos
 @endsection
-
 @section('crud_content')
 <div class="container py-5">
     <div class="card-header">
@@ -24,15 +23,22 @@
                 <div class="card h-100"> <!-- Añadido h-100 para que la tarjeta ocupe todo el espacio disponible -->
                     <div class="card-body">
                         <h5 class="card-title text-center">{{ $e_equipo->desc_estado_e }}</h5>
-                        <p class="card-text"><strong>Id:</strong> {{ $e_equipo->id }}</p>
+                        @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
 
+                        <p class="card-text"><strong>Id:</strong> {{ $e_equipo->id }}</p>
+                        @endif
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-info me-2 p-1" data-bs-toggle="modal" data-bs-target="#viewE_EquipoModal{{ $e_equipo->id }}">Ver</button>
+                            @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                             <button class="btn btn-primary me-2 p-2" data-bs-toggle="modal" data-bs-target="#editE_EquipoModal{{ $e_equipo->id }}">Editar</button>
+                            @endif
                             <form action="{{ route('e_equipos.destroy', $e_equipo->id) }}" method="POST" style="display: inline;">
-                                @csrf
+                                
+                            @csrf
                                 @method('DELETE')
+                                @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                 <button type="button" class="btn btn-sm btn-danger me-2 p-2" onclick="confirmDelete('{{ $e_equipo->id }}')">Eliminar</button>
+                                @endif
                             </form>
                         </div>
                     </div>
@@ -48,9 +54,10 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                            @if(Auth::user()->rol_id == 1 ||  Auth::user()->rol->nom_rol == 'Administrador')
                                 <p><strong>ID:</strong> {{ $e_equipo->id }}</p>
+                                @endif
                                 <p><strong>Descripción:</strong> {{ $e_equipo->desc_estado_e }}</p>
-                                <!-- Agrega más detalles si es necesario -->
                             </div>
                         </div>
                     </div>
@@ -69,7 +76,7 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="mb-3">
-                                        <label for="desc_estado_e{{ $e_equipo->id }}" class="form-label">Duración</label>
+                                        <label for="desc_estado_e{{ $e_equipo->id }}" class="form-label">Descripcion del estado</label>
                                         <input type="text" name="desc_estado_e" id="desc_estado_e{{ $e_equipo->id }}" value="{{ old('e_equipo', $e_equipo->desc_estado_e) }}" class="form-control" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Actualizar</button>

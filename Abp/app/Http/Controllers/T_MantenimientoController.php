@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\T_Mantenimiento;
+use App\Models\User;
 class T_MantenimientoController extends Controller
 {
     public function index()
     {
         $t__mantenimientos =T_Mantenimiento::all();
-        return view('admin.cruds.t_mantenimientos.index', compact('t__mantenimientos'));
+        $user = auth()->user();
+        return view('admin.cruds.t_mantenimientos.index', compact('t__mantenimientos','user'));
     }
     public function create()
     {

@@ -72,9 +72,6 @@ public function showUsers()
     {
         $user = auth()->user();
         $cruds = [
-            ['name' => 'Gestión de Tipos Mantenimientos', 'description' => 'Gestión de los tipos de mantenimientos .', 'route' => 't_mantenimientos.index'],
-            ['name' => 'Gestión de Estado de Equipos', 'description' => 'Gestión de los estados de equipo.', 'route' => 'e_equipos.index'],
-            ['name' => 'Gestión de Las Categorias de equipo', 'description' => 'Gestión de las categorias de equipo.', 'route' => 'categorias.index'],
             ['name' => 'Gestión de Equipo', 'description' => 'Gestión de Equipo.', 'route' => 'equipos.index'],
             ['name' => 'Gestión de Materiales', 'description' => 'Gestión de equipos agrupados.', 'route' => 'materiales.index'],
             ['name' => 'Gestión de Mantenimientos', 'description' => 'Gestión de mantenimientos de equipos.', 'route' => 'mantenimientos.index'],

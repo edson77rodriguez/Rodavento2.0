@@ -10,6 +10,7 @@ use App\Models\Actividad;
 use App\Models\Estado_actividad;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use App\Models\User;
 
 class Asignar_actividadesController extends Controller
 {
@@ -23,8 +24,9 @@ class Asignar_actividadesController extends Controller
         $encargados = Encargado::all();
         $actividades = Actividad::all();
         $estados = Estado_actividad::all();
+        $user = auth()->user();
 
-        return view('asignar_actividades.index', compact('asignaciones', 'guias', 'supervisores', 'encargados', 'actividades', 'estados'));
+        return view('asignar_actividades.index', compact('asignaciones', 'guias', 'supervisores', 'encargados', 'actividades', 'estados','user'));
     }
 
     // Guarda una nueva asignación

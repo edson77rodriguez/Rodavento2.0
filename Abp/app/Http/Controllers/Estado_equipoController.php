@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Estado_equipo;
+use App\Models\User;
 class Estado_equipoController extends Controller
 {
     public function index()
     {
         $e_equipos =Estado_equipo::all();
-        return view('admin.cruds.estado_equipos.index', compact('e_equipos'));
+        $user = auth()->user();
+        return view('admin.cruds.estado_equipos.index', compact('e_equipos','user'));
     }
     public function create()
     {
